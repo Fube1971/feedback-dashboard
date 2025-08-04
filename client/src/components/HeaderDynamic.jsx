@@ -28,7 +28,7 @@ const logos = [
 // Slogans / location phrases (rotating headline)
 const phrases = [
   "IMPOSSIBLE IS NOTHING",
-  "ADIDAS CENTRO COMERCIAL ANDINO",
+  "ADIDAS BRAND CENTER BOGOTA",
   "ADIDAS IGNITE PROJECT",
 ];
 
