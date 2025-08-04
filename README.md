@@ -36,7 +36,7 @@ The solution was developed during a technical test by:
    npm install date-fns@2.30.0
    ```
 
-3. Start the development server (Vite setup):
+3. Start the development server:
     [Bash must run inside the root folder that us ADIDAS-RETAIL-FEEDBACK]
    ```bash
    cd client
