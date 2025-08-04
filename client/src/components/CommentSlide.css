@@ -1,0 +1,59 @@
+/**
+ * Styles for the CommentSlide component.
+ * 
+ * .display-container:
+ *   - Fullscreen container for the floating comments
+ *   - Uses absolute positioning to allow elements to float freely
+ *
+ * .floating-comment:
+ *   - Each comment block that floats upward
+ *   - Styled with black background, white border, and white bold text
+ *   - Uses a 25-second keyframe animation to float upward
+ *
+ * @keyframes floatUpRandom:
+ *   - Animates the comment's vertical movement and opacity
+ *   - Appears smoothly (fades in and out)
+ */
+
+.display-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: white;
+  font-family: "adineue PRO Bold", sans-serif;
+}
+
+.floating-comment {
+  position: absolute;
+  background: black;
+  color: white;
+  padding: 1rem 2rem;
+  border: 1px solid white;
+  border-radius: 0;
+  font-size: 1.25rem;
+  max-width: 300px;
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  opacity: 0;
+  animation: floatUpRandom 25s linear forwards;
+}
+
+/* Animation: float comment upward while fading in and out */
+@keyframes floatUpRandom {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-150vh); /* Move comment well above the screen */
+    opacity: 0;
+  }
+}

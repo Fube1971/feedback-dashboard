@@ -1,0 +1,71 @@
+/* Adineue PRO Regular */
+@font-face {
+  font-family: "Adineue PRO";
+  src: url("./adineue\ PRO.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Adineue PRO Light */
+@font-face {
+  font-family: "Adineue PRO";
+  src: url("./adineue PRO Light Web Regular.ttf") format("truetype");
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Adineue PRO Bold */
+@font-face {
+  font-family: "Adineue PRO";
+  src: url("./adineue PRO Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Adineue PRO Bold Web */
+@font-face {
+  font-family: "Adineue PRO";
+  src: url("./adineue PRO Bold Web Regular.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Adineue PRO Black */
+@font-face {
+  font-family: "Adineue PRO";
+  src: url("./adineue PRO Black Web Regular.ttf") format("truetype");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Adineue PRO Condensed */
+@font-face {
+  font-family: "Adineue PRO Condensed";
+  src: url("./adineue PRO Cond.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Adineue PRO KZ Bold */
+@font-face {
+  font-family: "Adineue PRO KZ";
+  src: url("./adineue PRO KZ Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Adineue PRO KZ Light */
+@font-face {
+  font-family: "Adineue PRO KZ";
+  src: url("./adineue PRO KZ Light.ttf") format("truetype");
+  font-weight: 200s;
+  font-style: normal;
+  font-display: swap;
+}

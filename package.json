@@ -1,0 +1,38 @@
+{
+  "name": "adidas-retail-feedback",
+  "version": "1.0.0",
+  "description": "A retail feedback application for Adidas, utilizing React, Node.js, and Firebase.",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "client": "npm start --prefix client",
+    "build": "npm run build --prefix client",
+    "test": "echo \"No tests specified\" && exit 0",
+    "dev": "concurrently \"npm run client\" \"nodemon server/index.js\""
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "firebase": "^10.14.1",
+    "lucide-react": "^0.534.0",
+    "react-router-dom": "^7.7.1",
+    "socket.io": "^4.0.0"
+  },
+  "devDependencies": {
+    "concurrently": "^6.0.0",
+    "nodemon": "^2.0.0"
+  },
+  "engines": {
+    "node": ">=18.x",
+    "npm": ">=9.x"
+  },
+  "keywords": [
+    "adidas",
+    "retail",
+    "feedback",
+    "react",
+    "node",
+    "firebase"
+  ],
+  "author": "Your Name",
+  "license": "MIT"
+}
