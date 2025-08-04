@@ -19,7 +19,10 @@ The solution was developed during a technical test by:
 
 ## Setup Instructions
 
-1. Clone the repository:
+#DOWNLOAD GITBASH!
+-https://git-scm.com/downloads
+
+1. Clone the repository or donwload:
    ```bash
    git clone [https://github.com/Fube1971/ignite-feedback-dashboard]
    cd [your-project-folder]
@@ -36,14 +39,20 @@ The solution was developed during a technical test by:
    npm install date-fns@2.30.0
    ```
 
-3. Start the development server:
+3. Start the development server(Bash):
     [Bash must run inside the root folder that us ADIDAS-RETAIL-FEEDBACK]
    ```bash
    cd client
+   npm install
    npm run dev
-   ```
 
-4. Firebase setup:
+
+   (or npm start)
+   ```
+   Sometimes the one that works is npm start
+   It is necesary to install npm install in client and root folder for it to work 
+
+5. Firebase setup:
 
    - Firebase is used for authentication and database (Firestore)
    - An admin user is already configured:
