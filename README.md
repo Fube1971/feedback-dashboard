@@ -84,6 +84,7 @@ Install Dependencies for each one!
 - Recharts  
 - Firebase Firestore 
 - Firebase Authentication
+- Claude and ChatGpt to clean code
 
 ## System Structure
 
