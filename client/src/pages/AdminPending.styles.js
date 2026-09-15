@@ -13,9 +13,8 @@ export const PageWrapper = styled.div`
 // Main container for content layout
 export const Container = styled.div`
   background-color: white;
-  padding: 2rem;
-  width: 100%;
-  max-width: 420px;
+  padding: clamp(1rem, 4vw, 2rem);
+  width: min(100%, 720px);
   font-family: "adineue PRO Bold", sans-serif;
   margin: 0 auto;
   display: flex;
@@ -66,37 +65,42 @@ export const FeedbackList = styled.ul`
 // Individual feedback card styling
 export const FeedbackItem = styled.li`
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: stretch;
   background-color: #f3f4f6;
   border: 1px solid #000;
   padding: 1rem;
   margin-bottom: 1rem;
   min-width: 0;
   gap: 1rem;
-  flex-wrap: wrap;
 `;
 
 // Text section for each feedback (comment + keyword)
 export const FeedbackText = styled.p`
-  flex: 1;
+  width: 100%;
   margin: 0;
   font-size: 0.875rem;
   color: #000;
   min-width: 0;
-  overflow-wrap: anywhere;
+  word-break: normal;
+  overflow-wrap: break-word;
 `;
 
 // Group of action buttons (Approve / Reject)
 export const ButtonGroup = styled.div`
-  display: flex;
-  gap: 0.5rem;
-  margin-left: 1rem;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  width: 100%;
+
+  @media (max-width: 299px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 // Button used to approve or reject feedback
 export const ActionButton = styled.button`
+  width: 100%;
   padding: 0.5rem 1.25rem;
   font-size: 0.75rem;
   text-transform: uppercase;
@@ -110,7 +114,6 @@ export const ActionButton = styled.button`
   min-height: 44px;
 
   @media (max-width: 420px) {
-    flex: 1 1 8rem;
     padding-inline: 0.75rem;
   }
 
@@ -125,6 +128,7 @@ export const Divider = styled.hr`
   border: none;
   height: 1px;
   background-color: #e5e7eb;
+  width: 100%;
 `;
 
 // Logout button at the bottom

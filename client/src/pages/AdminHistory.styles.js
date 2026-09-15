@@ -14,9 +14,8 @@ export const PageWrapper = styled.div`
 // Main container for the page layout
 export const Container = styled.div`
   background-color: white;
-  padding: 2rem;
-  width: 100%;
-  max-width: 420px;
+  padding: clamp(1rem, 4vw, 2rem);
+  width: min(100%, 720px);
   font-family: "adineue PRO Bold", sans-serif;
   margin: 0 auto;
   display: flex;
@@ -70,13 +69,19 @@ export const FeedbackList = styled.ul`
 
 // Styling for each individual feedback item
 export const FeedbackItem = styled.li`
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.25rem;
   background-color: ${(props) =>
     props.$status === "approved" ? "#d5d6d5ff" : "#ee9191ff"}; // green/gray if approved, red if rejected
   border: 1px solid #000;
   padding: 1rem;
   margin-bottom: 1rem;
   min-width: 0;
-  overflow-wrap: anywhere;
+  width: 100%;
+  word-break: normal;
+  overflow-wrap: break-word;
 `;
 
 // Label for text blocks like comment, moderator, date
@@ -84,6 +89,10 @@ export const Label = styled.p`
   margin: 0.25rem 0;
   font-size: 0.875rem;
   color: #000;
+  width: 100%;
+  min-width: 0;
+  word-break: normal;
+  overflow-wrap: break-word;
 `;
 
 // Bolded text for showing status (Approved/Rejected)
@@ -91,10 +100,15 @@ export const StatusText = styled.p`
   font-size: 0.875rem;
   font-weight: bold;
   margin: 0.5rem 0;
+  width: 100%;
+  min-width: 0;
+  word-break: normal;
+  overflow-wrap: break-word;
 `;
 
 // Button to re-approve or re-reject a feedback
 export const ToggleButton = styled.button`
+  width: 100%;
   padding: 0.5rem 1.25rem;
   font-size: 0.75rem;
   text-transform: uppercase;

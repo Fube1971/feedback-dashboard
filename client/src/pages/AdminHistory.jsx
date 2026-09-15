@@ -35,6 +35,7 @@ import {
   StatusText,
   ToggleButton,
   LogoutButton,
+  Title,
 } from "./AdminHistory.styles";
 
 const AdminHistory = () => {
@@ -104,7 +105,7 @@ const AdminHistory = () => {
         <ArrowLeft size={18} /> atrás
       </BackButton>
 
-      <h2>HISTORIAL DE MODERACIÓN</h2>
+      <Title>HISTORIAL DE MODERACIÓN</Title>
 
       {/* Message if no reviewed comments are found */}
       {moderated.length === 0 ? (
