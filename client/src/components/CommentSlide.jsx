@@ -21,8 +21,27 @@ import { db } from "../services/firebase";
 import { collection, query, where, onSnapshot } from "firebase/firestore";
 import "./CommentSlide.css";
 
+const demoComments = [
+  {
+    comments: "Great shopping experience and friendly service.",
+    keywords: "Friendly",
+  },
+  {
+    comments: "The feedback process was quick and easy.",
+    keywords: "Easy",
+  },
+  {
+    comments: "The staff was helpful and attentive.",
+    keywords: "Helpful",
+  },
+  {
+    comments: "I found what I needed without waiting too long.",
+    keywords: "Quick",
+  },
+];
+
 const CommentSlide = () => {
-  const [comments, setComments] = useState([]);
+  const [comments, setComments] = useState(demoComments);
 
   useEffect(() => {
     // Firestore query to listen for approved comments with consent
@@ -34,8 +53,16 @@ const CommentSlide = () => {
 
     // Real-time updates
     const unsubscribe = onSnapshot(q, (snapshot) => {
-      const data = snapshot.docs.map((doc) => doc.data());
-      setComments(data);
+      const data = snapshot.docs
+        .map((doc) => doc.data())
+        .filter(
+          (comment) =>
+            typeof comment.comments === "string" && comment.comments.trim()
+        );
+      setComments(data.length > 0 ? data : demoComments);
+    }, (error) => {
+      console.error("Error listening for approved comments:", error);
+      setComments(demoComments);
     });
 
     return () => unsubscribe(); // Clean up on unmount

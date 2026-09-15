@@ -28,7 +28,12 @@ import ExperienceTreemapChart from "../components/ExperienceTreemapChart";
 import HeaderDynamic from "../components/HeaderDynamic";
 import FeedbackQR from "../components/FeedbackQR";
 
-import { Container, CarouselWrapper, HeaderLine } from "./DisplayPages.styles"; // Local layout styles
+import {
+  Container,
+  CarouselWrapper,
+  DemoNotice,
+  HeaderLine,
+} from "./DisplayPages.styles"; // Local layout styles
 
 const DisplayPage = () => {
   // Defines all the visual slides to be rotated in the carousel
@@ -48,6 +53,7 @@ const DisplayPage = () => {
       {/* Header with animated Adidas branding */}
       <HeaderDynamic />
       <HeaderLine />
+      <DemoNotice>Portfolio Demo — Empty dates use simulated sample data.</DemoNotice>
       {/* Carousel displaying all chart slides */}
       <CarouselWrapper>
         <Carousel slides={slides} duration={15000} />

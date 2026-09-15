@@ -93,3 +93,12 @@ export const HeaderLine = styled.div`
   background-color: #000000ff; // gris más suave
   width: 100%;
 `;
+
+export const DemoNotice = styled.p`
+  align-self: center;
+  margin: 0.5rem 1rem 0;
+  color: #5a5a5a;
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  text-align: center;
+`;
