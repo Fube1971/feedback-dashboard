@@ -57,7 +57,7 @@ const ShoeBoxStack = ({
   const columnWidth = chartWidth > 0 ? chartWidth / 5 : width;
   const boxWidth = Math.max(48, Math.min(230, columnWidth * 0.65));
   const boxHeight = Math.max(28, Math.min(92, boxWidth * 0.4));
-  const shoeSize = boxWidth * 0.92;
+  const shoeSize = Math.max(42, Math.min(250, boxWidth * 1.05));
   const safeValue = Math.max(0, Math.round(value || 0)); // Ensure value is positive integer
   const boxes = Array.from({ length: safeValue }); // One box per rating level
   const totalStackHeight = boxHeight * safeValue;
@@ -96,20 +96,26 @@ const ShoeBoxStack = ({
         />
       ))}
 
-      {/* Shoe image resting directly on the top box */}
-      <motion.image
-        href={shoeImage}
-        x={(boxWidth - shoeSize) / 2}
-        y={-totalStackHeight - shoeSize}
-        width={shoeSize}
-        height={shoeSize}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{
-          delay: 0.2 + safeValue * 0.1 + index * 0.4,
-          duration: 0.4,
-        }}
-      />
+      {/* Shoe image at the top, with only its visible width reduced. */}
+      <g
+        transform={`translate(${boxWidth / 2} 0) scale(0.92 1) translate(${
+          -boxWidth / 2
+        } 0)`}
+      >
+        <motion.image
+          href={shoeImage}
+          x={(boxWidth - shoeSize) / 2}
+          y={-totalStackHeight - shoeSize * 0.7}
+          width={shoeSize}
+          height={shoeSize}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            delay: 0.2 + safeValue * 0.1 + index * 0.4,
+            duration: 0.4,
+          }}
+        />
+      </g>
 
     </g>
   );
