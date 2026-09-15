@@ -85,60 +85,36 @@ const WaitTimeShirtChart = () => {
           minHeight: 0,
           overflow: "hidden",
           gap: "clamp(0.15rem, 1vw, 1rem)",
+          flexDirection: "column",
         }}
       >
-        {/* Horizontal Rack Line */}
+        {/* Day labels stay above the rack stage. */}
         <div
           style={{
-            position: "absolute",
-            top: "45%",
-            left: 0,
             width: "100%",
-            height: "clamp(3px, 0.5vw, 8px)",
-            backgroundColor: "black",
-            zIndex: 999,
+            display: "flex",
+            justifyContent: "space-evenly",
+            alignItems: "center",
+            gap: "clamp(0.15rem, 1vw, 1rem)",
           }}
-        />
+        >
+          {data.map((entry, index) => {
+            const label = LABELS[index % LABELS.length];
 
-        {/* Shirt Stacks */}
-        {data.map((entry, index) => {
-          const shirt = SHIRTS[index % SHIRTS.length];
-          const label = LABELS[index % LABELS.length];
-          const rating = typeof entry.rating === "number" ? entry.rating : 0;
-          const rounded = Math.round(rating);
-
-          return (
-            <div
-              key={index}
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "0.8vh",
-                height: "100%",
-              }}
-            >
-              {/* Label PNG with day name text overlaid */}
+            return (
               <div
+                key={index}
                 style={{
                   position: "relative",
                   width: "clamp(42px, 9vw, 100px)",
                   maxWidth: "100px",
                   minWidth: "42px",
-                  height: "auto",
-                  marginBottom: "clamp(0.25rem, 1vh, 1rem)",
-                  transform: "translateY(-1vh)",
                 }}
               >
                 <img
                   src={label}
                   alt={`Label ${index + 1}`}
-                  style={{
-                    width: "100%",
-                    height: "auto",
-                    display: "block",
-                  }}
+                  style={{ width: "100%", height: "auto", display: "block" }}
                 />
                 <div
                   style={{
@@ -158,14 +134,48 @@ const WaitTimeShirtChart = () => {
                   {entry.day}
                 </div>
               </div>
+            );
+          })}
+        </div>
 
-              {/* Shirt stack (visual rating) */}
+        {/* The rack line is positioned against the shirt zone, not the slide. */}
+        <div
+          style={{
+            position: "relative",
+            flex: 1,
+            minHeight: 0,
+            width: "100%",
+            display: "flex",
+            alignItems: "flex-end",
+            justifyContent: "space-evenly",
+            gap: "clamp(0.15rem, 1vw, 1rem)",
+          }}
+        >
+          <div
+            style={{
+              position: "absolute",
+              top: "20%",
+              left: 0,
+              width: "100%",
+              height: "clamp(3px, 0.5vw, 8px)",
+              backgroundColor: "black",
+              zIndex: 1,
+            }}
+          />
+          {data.map((entry, index) => {
+            const shirt = SHIRTS[index % SHIRTS.length];
+            const rating = typeof entry.rating === "number" ? entry.rating : 0;
+            const rounded = Math.max(1, Math.round(rating));
+
+            return (
               <div
+                key={index}
                 style={{
                   position: "relative",
+                  zIndex: 2,
                   width: "clamp(42px, 12vw, 130px)",
                   height: "clamp(120px, 32vh, 300px)",
-                  maxHeight: "48%",
+                  maxHeight: "78%",
                 }}
               >
                 {Array.from({ length: rounded }).map((_, i) => (
@@ -190,20 +200,32 @@ const WaitTimeShirtChart = () => {
                   />
                 ))}
               </div>
+            );
+          })}
+        </div>
 
-              {/* Numerical Rating */}
-              <div
-                style={{
-                  fontSize: "clamp(14px, 1.2vw, 24px)",
-                  fontWeight: "bold",
-                  marginTop: "0.5vh",
-                }}
-              >
-                {rating.toFixed(1)}/5
-              </div>
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "space-evenly",
+            gap: "clamp(0.15rem, 1vw, 1rem)",
+          }}
+        >
+          {data.map((entry, index) => (
+            <div
+              key={index}
+              style={{
+                width: "clamp(42px, 12vw, 130px)",
+                textAlign: "center",
+                fontSize: "clamp(0.75rem, 1.2vw, 1.5rem)",
+                fontWeight: "bold",
+              }}
+            >
+              {entry.rating.toFixed(1)}/5
             </div>
-          );
-        })}
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -16,7 +16,7 @@
  * Styles are handled by `CommentSlide.css`
  */
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { db } from "../services/firebase";
 import { collection, query, where, onSnapshot } from "firebase/firestore";
 import "./CommentSlide.css";
@@ -68,50 +68,17 @@ const CommentSlide = () => {
     return () => unsubscribe(); // Clean up on unmount
   }, []);
 
-  // Create a large pool of repeated comments for infinite animation
-  const repeated = [];
-  const repeatCount = 50; // Total number of floating comments
+  const scheduled = useMemo(() => {
+    const lanes = 6;
+    const repeatCount = 36;
 
-  if (comments.length > 0) {
-    while (repeated.length < repeatCount) {
-      comments.forEach((item) => repeated.push(item));
-    }
-  }
-
-  // Schedule comment placement in lanes
-  const lanes = 5; // Number of vertical lanes
-  const laneTimers = new Array(lanes).fill(0); // Track lane availability
-  let timeCursor = 0; // Global time position
-
-  const scheduled = [];
-
-  repeated.forEach((item) => {
-    let assigned = false;
-
-    // Wait until a lane is free
-    while (!assigned) {
-      for (let i = 0; i < lanes; i++) {
-        if (laneTimers[i] <= timeCursor) {
-          laneTimers[i] = timeCursor + 25; // Reserve lane for 25s
-          scheduled.push({
-            item,
-            top: `${(i / (lanes - 1)) * 78}%`, // vertical spacing between lanes
-            left: Math.floor(Math.random() * 70), // random horizontal start (in %)
-            delay: timeCursor, // delay before animation starts
-          });
-          assigned = true;
-          break;
-        }
-      }
-
-      // If no lanes available, move forward in time
-      if (!assigned) {
-        timeCursor += 1;
-      }
-    }
-
-    timeCursor += 2; // Spacing between comments
-  });
+    return Array.from({ length: repeatCount }, (_, index) => ({
+      item: comments[index % comments.length],
+      lane: index % lanes,
+      left: 3 + ((index * 29 + comments.length * 11) % 65),
+      delay: index * 4 - (lanes * 4),
+    }));
+  }, [comments]);
 
   return (
     <div className="display-container">
@@ -120,7 +87,7 @@ const CommentSlide = () => {
           key={index}
           className="floating-comment"
           style={{
-            top: `${entry.top}px`,
+            bottom: `-${8 + entry.lane * 3}%`,
             left: `${entry.left}%`,
             animationDelay: `${entry.delay}s`,
           }}

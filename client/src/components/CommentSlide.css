@@ -24,6 +24,7 @@
   background: white;
   font-family: "adineue PRO Bold", sans-serif;
   box-sizing: border-box;
+  container-type: size;
 }
 
 .floating-comment {
@@ -35,11 +36,12 @@
   border-radius: 0;
   font-size: clamp(0.75rem, 1.5vw, 1.25rem);
   max-width: min(300px, 42vw);
+  width: min(300px, calc(100% - 1rem));
   white-space: normal;
   word-wrap: break-word;
   overflow-wrap: break-word;
   opacity: 0;
-  animation: floatUpRandom 25s linear forwards;
+  animation: floatUpRandom 28s linear infinite;
 }
 
 /* Animation: float comment upward while fading in and out */
@@ -55,7 +57,7 @@
     opacity: 1;
   }
   100% {
-    transform: translateY(-150%); /* Move comment above the slide */
+    transform: translateY(calc(-100cqh - 100%));
     opacity: 0;
   }
 }
