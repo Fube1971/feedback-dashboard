@@ -38,16 +38,26 @@ import boxGray from "../assets/box-gray.png";
 
 import { motion } from "framer-motion";
 import { useMetricByDay } from "../hooks/useMetricByDay";
+import { useResizeObserver } from "../hooks/useResizeObserver";
 
 //  Stacks of boxes per rating level
 const boxColorCycle = [boxBlue, boxGreen, boxBlack, boxRed, boxGray];
 const shoeColorCycle = [shoeBlue, shoeGreen, shoeBlack, shoeRed, shoeGray];
 
 // Custom bar shape: stacked boxes + shoe + rating number
-const ShoeBoxStack = ({ x, y, width, height, value, index }) => {
-  const boxWidth = Math.max(38, Math.min(112, width * 2.4));
-  const boxHeight = Math.max(24, Math.min(58, boxWidth * 0.42));
-  const shoeSize = Math.max(34, Math.min(100, boxWidth * 0.88));
+const ShoeBoxStack = ({
+  x,
+  y,
+  width,
+  height,
+  value,
+  index,
+  chartWidth,
+}) => {
+  const columnWidth = chartWidth > 0 ? chartWidth / 5 : width;
+  const boxWidth = Math.max(48, Math.min(230, columnWidth * 0.65));
+  const boxHeight = Math.max(28, Math.min(92, boxWidth * 0.4));
+  const shoeSize = Math.max(42, Math.min(250, boxWidth * 1.05));
   const safeValue = Math.max(0, Math.round(value || 0)); // Ensure value is positive integer
   const boxes = Array.from({ length: safeValue }); // One box per rating level
   const totalStackHeight = boxHeight * safeValue;
@@ -59,9 +69,9 @@ const ShoeBoxStack = ({ x, y, width, height, value, index }) => {
       {/* Rating number on top of the stack */}
       <text
         x={boxWidth / 2}
-        y={-totalStackHeight - shoeSize + 40}
+        y={-totalStackHeight - shoeSize - 12}
         fill="#000"
-        fontSize={20}
+        fontSize={Math.max(12, Math.min(30, columnWidth * 0.08))}
         fontWeight="bold"
         textAnchor="middle"
       >
@@ -108,8 +118,8 @@ const ShoeBoxStack = ({ x, y, width, height, value, index }) => {
 const COLORS = ["#0074D9", "#2ECC40", "#111111", "#FF4136", "#AAAAAA"];
 
 // Custom X-axis tick component showing day inside a styled circle
-const CustomXAxisTick = ({ x, y, payload, index }) => {
-  const radius = 22;
+const CustomXAxisTick = ({ x, y, payload, index, chartWidth }) => {
+  const radius = Math.max(18, Math.min(36, chartWidth * 0.02));
   const color = COLORS[index % COLORS.length];
   const label = payload.value;
 
@@ -127,7 +137,7 @@ const CustomXAxisTick = ({ x, y, payload, index }) => {
         x={0}
         y={5}
         textAnchor="middle"
-        fontSize={11}
+        fontSize={Math.max(9, Math.min(16, radius * 0.42))}
         fontWeight="bold"
         fill="#111"
       >
@@ -140,6 +150,8 @@ const CustomXAxisTick = ({ x, y, payload, index }) => {
 // Main chart component
 const GeneralRatingChart = () => {
   const data = useMetricByDay("general"); // Last 5 days general average
+  const [chartRef, chartSize] = useResizeObserver();
+  const dateRadius = Math.max(18, Math.min(36, chartSize.width * 0.02));
 
   return (
     <div
@@ -170,14 +182,14 @@ const GeneralRatingChart = () => {
       </h2>
 
       {/* Bar Chart Container */}
-      <div style={{ width: "100%", flex: 1, minHeight: 0 }}>
+      <div ref={chartRef} style={{ width: "100%", flex: 1, minHeight: 0 }}>
         <ResponsiveContainer>
           <BarChart data={data} margin={{ top: 20, bottom: 40 }}>
             <XAxis
               dataKey="day"
-              tick={<CustomXAxisTick />}
+              tick={(props) => <CustomXAxisTick {...props} chartWidth={chartSize.width} />}
               interval={0}
-              height={60}
+              height={dateRadius * 2 + 24}
               axisLine={false}
               tickLine={false}
             />
@@ -194,6 +206,7 @@ const GeneralRatingChart = () => {
                   height={props.height}
                   value={props.payload.rating}
                   index={props.index}
+                  chartWidth={chartSize.width}
                 />
               )}
             />

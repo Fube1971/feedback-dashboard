@@ -98,7 +98,8 @@ export const CarouselWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0;
+  padding: 0 clamp(0.25rem, 2vw, 2rem);
+  box-sizing: border-box;
   min-width: 0;
 `;
 

@@ -18,18 +18,11 @@
  */
 
 import React from "react";
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
-} from "recharts";
 import { useMetricByDay } from "../hooks/useMetricByDay";
 import adidasLogoBlack from "../assets/adidas-logo-black.png";
 import adidasLogoWhite from "../assets/adidas-logo-white.png";
 import { motion } from "framer-motion";
+import "./StaffRatingBars.css";
 
 // Color palette for each day's bar
 const COLORS = [
@@ -42,136 +35,6 @@ const COLORS = [
 
 const StaffRatingChart = () => {
   const data = useMetricByDay("staff");
-
-  // Custom bar shape for each row
-  const CustomStaffBar = (props) => {
-    const { x, y, width, height, index, value } = props;
-
-    const color = COLORS[index % COLORS.length];
-    const logo = color === "#111111" ? adidasLogoWhite : adidasLogoBlack;
-
-    const blockSize = Math.max(26, Math.min(56, height));
-    const ratingMaxWidth = Math.max(64, Math.min(520, width - blockSize * 2));
-    const ratingBarLength = (Math.max(0, value) / 5) * ratingMaxWidth;
-    const totalWidth = blockSize + ratingMaxWidth + blockSize;
-
-    return (
-      <g transform={`translate(${x}, ${y})`}>
-        {/* Outer border box around full row */}
-        <rect
-          x={0}
-          y={0}
-          width={totalWidth}
-          height={blockSize}
-          fill="none"
-          stroke="black"
-          strokeWidth={1.5}
-        />
-
-        {/* Left square with day index */}
-        <rect
-          x={0}
-          y={0}
-          width={blockSize}
-          height={blockSize}
-          fill={color}
-          stroke="black"
-        />
-        <text
-          x={blockSize / 2}
-          y={blockSize / 2 + 5}
-          fill="white"
-          fontSize={16}
-          fontWeight="bold"
-          textAnchor="middle"
-        >
-          {index + 1}
-        </text>
-
-        {/* Main rating bar */}
-        <motion.rect
-          x={blockSize}
-          y={0}
-          height={blockSize}
-          initial={{ width: 0 }}
-          animate={{ width: ratingBarLength }}
-          transition={{ duration: 0.8, delay: index * 0.1 }}
-          fill={color}
-          stroke="black"
-        />
-
-        {/* Adidas logo floating at the end of the bar */}
-        {value > 0 && (
-          <motion.image
-            href={logo}
-            y={0}
-            width={blockSize}
-            height={blockSize}
-            preserveAspectRatio="xMidYMid meet"
-            initial={{ x: blockSize }}
-            animate={{ x: blockSize + ratingBarLength - blockSize - 10 }}
-            transition={{
-              delay: index * 0.1,
-              duration: 0.8,
-              ease: "easeOut",
-            }}
-          />
-        )}
-
-        {/* Final rating text block */}
-        <rect
-          x={blockSize + ratingMaxWidth}
-          y={0}
-          width={blockSize}
-          height={blockSize}
-          fill="white"
-          stroke="black"
-        />
-        <text
-          x={blockSize + ratingMaxWidth + blockSize / 2}
-          y={blockSize / 2 + 5}
-          fill="black"
-          fontSize={14}
-          fontWeight="bold"
-          textAnchor="middle"
-        >
-          {value.toFixed(1)}/5
-        </text>
-      </g>
-    );
-  };
-
-  // Custom Y-axis tick showing each day inside a colored circle
-  const CustomYAxisTick = ({ x, y, payload, index }) => {
-    const barHeight = 34;
-    const radius = barHeight / 2;
-    const color = COLORS[index % COLORS.length];
-    const label = payload.value;
-    const xOffset = 38;
-
-    return (
-      <g transform={`translate(${x - xOffset}, ${y - radius})`}>
-        <circle
-          cx={0}
-          cy={radius}
-          r={radius}
-          fill="#faf7f2"
-          stroke={color}
-          strokeWidth={6}
-        />
-        <text
-          x={0}
-          y={radius + 5}
-          textAnchor="middle"
-          fontSize={11}
-          fill="#111"
-          fontWeight="bold"
-        >
-          {label}
-        </text>
-      </g>
-    );
-  };
 
   return (
     <div
@@ -201,32 +64,53 @@ const StaffRatingChart = () => {
         ¿CÓMO TE ATENDIMOS?
       </h2>
 
-      {/* Chart container */}
-      <div style={{ width: "100%", maxWidth: "1200px", flex: 1, minHeight: 0 }}>
-        <ResponsiveContainer>
-          <BarChart
-            layout="vertical"
-            data={data}
-            margin={{ top: 12, bottom: 12, left: 48, right: 8 }}
-            barCategoryGap="20%"
-          >
-            <XAxis type="number" domain={[0, 5]} stroke="#000" hide />
-            <YAxis
-              type="category"
-              dataKey="day"
-              tick={<CustomYAxisTick />}
-              width={52}
-              axisLine={false}
-              tickLine={false}
-            />
-            <Tooltip />
-            <Bar
-              dataKey="rating"
-              shape={(props) => <CustomStaffBar {...props} />}
-              isAnimationActive={false}
-            />
-          </BarChart>
-        </ResponsiveContainer>
+      <div className="staff-chart" aria-label="Calificación de atención del personal">
+        {data.map((entry, index) => {
+          const rating = Math.max(0, Math.min(5, Number(entry.rating) || 0));
+          const percentage = (rating / 5) * 100;
+          const color = COLORS[index % COLORS.length];
+          const logo = color === "#111111" ? adidasLogoWhite : adidasLogoBlack;
+
+          return (
+            <div className="staff-row" key={entry.day || index}>
+              <div
+                className="staff-date"
+                style={{ "--staff-color": color }}
+              >
+                {entry.day}
+              </div>
+              <div className="staff-bar" style={{ "--staff-color": color }}>
+                <div className="staff-index">{index + 1}</div>
+                <div className="staff-track">
+                  <motion.div
+                    className="staff-fill"
+                    initial={{ width: 0 }}
+                    animate={{ width: `${percentage}%` }}
+                    transition={{ duration: 0.8, delay: index * 0.1 }}
+                  />
+                  {rating > 0 && (
+                    <motion.img
+                      className="staff-runner"
+                      src={logo}
+                      alt=""
+                      style={{
+                        left: `${percentage}%`,
+                        transform:
+                          rating === 5
+                            ? "translate(-100%, -50%)"
+                            : "translate(-100%, -50%)",
+                      }}
+                      initial={{ left: 0 }}
+                      animate={{ left: `${percentage}%` }}
+                      transition={{ duration: 0.8, delay: index * 0.1 }}
+                    />
+                  )}
+                </div>
+                <div className="staff-score">{rating.toFixed(1)}/5</div>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

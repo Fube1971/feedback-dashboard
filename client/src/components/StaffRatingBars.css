@@ -1,0 +1,114 @@
+.staff-chart {
+  width: 82%;
+  max-width: none;
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(0.55rem, 1.5vh, 1.25rem);
+}
+
+.staff-row {
+  width: 100%;
+  display: grid;
+  grid-template-columns: clamp(48px, 5vw, 84px) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(0.5rem, 1.2vw, 1.25rem);
+  min-width: 0;
+}
+
+.staff-date {
+  width: 100%;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #faf7f2;
+  border: clamp(3px, 0.35vw, 6px) solid var(--staff-color);
+  color: #111;
+  font-size: clamp(0.55rem, 1.1vw, 1.05rem);
+  font-weight: 700;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.staff-bar {
+  width: 100%;
+  min-width: 0;
+  min-height: clamp(48px, 7vh, 82px);
+  display: grid;
+  grid-template-columns: clamp(44px, 5vw, 76px) minmax(0, 1fr) clamp(64px, 7vw, 104px);
+  border: 2px solid #000;
+  background: #fff;
+}
+
+.staff-index,
+.staff-score {
+  min-width: 0;
+  min-height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 0.25rem;
+  border: 0;
+  font-size: clamp(0.9rem, 1.8vw, 1.65rem);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.staff-index {
+  color: #fff;
+  background: var(--staff-color);
+  border-right: 2px solid #000;
+}
+
+.staff-score {
+  color: #000;
+  background: #fff;
+  border-left: 2px solid #000;
+  white-space: nowrap;
+}
+
+.staff-track {
+  position: relative;
+  min-width: 0;
+  min-height: 100%;
+  overflow: hidden;
+  background: #fff;
+}
+
+.staff-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  max-width: 100%;
+  background: var(--staff-color);
+  border-right: 1px solid #000;
+}
+
+.staff-runner {
+  position: absolute;
+  top: 50%;
+  z-index: 1;
+  width: clamp(28px, 4vw, 64px);
+  height: clamp(28px, 4vw, 64px);
+  object-fit: contain;
+  pointer-events: none;
+  transform: translate(-100%, -50%);
+}
+
+@media (max-width: 640px) {
+  .staff-chart {
+    width: 100%;
+    max-width: none;
+  }
+
+  .staff-row {
+    grid-template-columns: clamp(40px, 13vw, 54px) minmax(0, 1fr);
+    gap: 0.5rem;
+  }
+
+  .staff-bar {
+    min-height: 48px;
+    grid-template-columns: 40px minmax(0, 1fr) 64px;
+  }
+}

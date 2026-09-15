@@ -26,6 +26,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { useMetricByDay } from "../hooks/useMetricByDay";
+import { useResizeObserver } from "../hooks/useResizeObserver";
 
 // PNG icons for balls
 import ball1 from "../assets/ball-1.png";
@@ -70,8 +71,20 @@ if (!document.getElementById("ball-animations")) {
 }
 
 // Custom rendering for each dot (ball)
-const CustomBallDot = ({ cx, cy, value, index }) => {
-  const size = Math.max(22, Math.min(72, value * 12 + 18));
+const CustomBallDot = ({ cx, cy, value, index, chartWidth, chartHeight }) => {
+  const clampedRating = Math.max(1, Math.min(5, Number(value) || 1));
+  const normalized = (clampedRating - 1) / 4;
+  const isMobile = chartWidth > 0 && chartWidth < 600;
+  const minBallSize = isMobile
+    ? Math.max(34, Math.min(44, chartWidth * 0.12))
+    : 85;
+  const maxBallSize = Math.max(
+    minBallSize + (isMobile ? 20 : 30),
+    isMobile
+      ? Math.min(78, Math.max(44, chartWidth * 0.2))
+      : Math.min(180, Math.min(chartWidth * 0.1, chartHeight * 0.3))
+  );
+  const size = minBallSize + normalized * (maxBallSize - minBallSize);
   const offset = size / 2;
   const [visible, setVisible] = useState(false);
 
@@ -106,7 +119,7 @@ const CustomBallDot = ({ cx, cy, value, index }) => {
         y={cy - offset - 10}
         textAnchor="middle"
         fill="#000"
-        fontSize={12}
+        fontSize={Math.max(12, Math.min(24, size * 0.24))}
         fontWeight="bold"
         style={{
           opacity: visible ? 1 : 0,
@@ -122,8 +135,8 @@ const CustomBallDot = ({ cx, cy, value, index }) => {
 // X-axis circle labels
 const COLORS = ["#0074D9", "#2ECC40", "#111111", "#FF4136", "#AAAAAA"];
 
-const CustomXAxisTick = ({ x, y, payload, index }) => {
-  const radius = 20;
+const CustomXAxisTick = ({ x, y, payload, index, chartWidth }) => {
+  const radius = Math.max(16, Math.min(34, chartWidth * 0.025));
   const color = COLORS[index % COLORS.length];
   const label = payload.value;
 
@@ -141,7 +154,7 @@ const CustomXAxisTick = ({ x, y, payload, index }) => {
         x={0}
         y={5}
         textAnchor="middle"
-          fontSize={9}
+        fontSize={Math.max(9, Math.min(16, radius * 0.42))}
         fontWeight="bold"
         fill="#111"
       >
@@ -154,6 +167,8 @@ const CustomXAxisTick = ({ x, y, payload, index }) => {
 // Main chart component
 const AvailabilityLineChart = () => {
   const data = useMetricByDay("availability");
+  const [chartRef, chartSize] = useResizeObserver();
+  const dateRadius = Math.max(16, Math.min(34, chartSize.width * 0.025));
 
   return (
     <div
@@ -184,9 +199,11 @@ const AvailabilityLineChart = () => {
 
       {/* Chart container */}
       <div
+        ref={chartRef}
         style={{
           width: "90%",
-          maxWidth: "1200px",
+          maxWidth: "none",
+          flex: 1,
           height: "calc(100% - clamp(3rem, 10vh, 5rem))",
           minHeight: 0,
           overflow: "hidden",
@@ -196,18 +213,26 @@ const AvailabilityLineChart = () => {
         <div
           style={{
             width: "100%",
-            maxWidth: "1400px",
+            maxWidth: "none",
             height: "100%",
             minHeight: 0,
             overflow: "visible",
           }}
         >
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={data} margin={{ top: 42, bottom: 48, left: 12, right: 12 }}>
+            <LineChart
+              data={data}
+              margin={{
+                top: chartSize.width < 600 ? 70 : 110,
+                bottom: chartSize.width < 600 ? 64 : 86,
+                left: 12,
+                right: 12,
+              }}
+            >
             <XAxis
               dataKey="day"
-              tick={<CustomXAxisTick />}
-              height={58}
+              tick={(props) => <CustomXAxisTick {...props} chartWidth={chartSize.width} />}
+              height={dateRadius * 2 + 24}
               interval={0}
               axisLine={false}
               tickLine={false}
@@ -219,7 +244,13 @@ const AvailabilityLineChart = () => {
               dataKey="rating"
               stroke="#000"
               strokeWidth={2}
-              dot={(props) => <CustomBallDot {...props} />}
+              dot={(props) => (
+                <CustomBallDot
+                  {...props}
+                  chartWidth={chartSize.width}
+                  chartHeight={chartSize.height}
+                />
+              )}
               activeDot={false}
               isAnimationActive={false}
             />

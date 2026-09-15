@@ -2,11 +2,10 @@
  * WaitTimeShirtChart
  *
  * Displays a visual chart where each day's wait time rating is represented
- * as a vertical stack of overlapping shirt images (like a clothes rack).
+ * as a vertical stack of overlapping shirt images.
  * - Each column corresponds to one day (up to 5 days).
  * - The number of shirts is determined by the rounded rating (1–5).
  * - Day labels are displayed using PNG tags, and rating is shown numerically below.
- * - A horizontal "rack" line visually connects the tops of all hangers.
  *
  * Uses:
  * - useMetricByDay("waitTime") hook to fetch ratings from Firebase
@@ -77,7 +76,7 @@ const WaitTimeShirtChart = () => {
         style={{
           flex: 1,
           width: "100%",
-          maxWidth: "1600px",
+          maxWidth: "none",
           display: "flex",
           justifyContent: "space-evenly",
           alignItems: "center",
@@ -88,7 +87,7 @@ const WaitTimeShirtChart = () => {
           flexDirection: "column",
         }}
       >
-        {/* Day labels stay above the rack stage. */}
+        {/* Day labels stay above the shirt stage. */}
         <div
           style={{
             width: "100%",
@@ -106,8 +105,8 @@ const WaitTimeShirtChart = () => {
                 key={index}
                 style={{
                   position: "relative",
-                  width: "clamp(42px, 9vw, 100px)",
-                  maxWidth: "100px",
+                  width: "clamp(42px, 7vw, 150px)",
+                  maxWidth: "150px",
                   minWidth: "42px",
                 }}
               >
@@ -138,28 +137,17 @@ const WaitTimeShirtChart = () => {
           })}
         </div>
 
-        {/* Shared coordinate system for the rack and all shirt stacks. */}
+        {/* Shared coordinate system for all shirt stacks. */}
         <div
           style={{
             position: "relative",
-            flex: "0 0 clamp(120px, 30vh, 280px)",
-            height: "clamp(120px, 30vh, 280px)",
+            flex: "0 0 clamp(120px, 38vh, 360px)",
+            height: "clamp(120px, 38vh, 360px)",
             width: "100%",
-            maxWidth: "1600px",
+            maxWidth: "none",
             boxSizing: "border-box",
           }}
         >
-          <div
-            style={{
-              position: "absolute",
-              top: "8%",
-              left: 0,
-              width: "100%",
-              height: "clamp(3px, 0.5vw, 8px)",
-              backgroundColor: "black",
-              zIndex: 1,
-            }}
-          />
           <div
             style={{
               position: "absolute",
@@ -168,7 +156,7 @@ const WaitTimeShirtChart = () => {
               alignItems: "flex-end",
               justifyContent: "space-evenly",
               gap: "clamp(0.15rem, 1vw, 1rem)",
-              zIndex: 2,
+              zIndex: 1,
             }}
           >
             {data.map((entry, index) => {
@@ -181,7 +169,7 @@ const WaitTimeShirtChart = () => {
                   key={index}
                   style={{
                     position: "relative",
-                    width: "clamp(30px, 14vw, 130px)",
+                    width: "clamp(40px, 13vw, 220px)",
                     height: "100%",
                     minWidth: 0,
                   }}
@@ -229,7 +217,7 @@ const WaitTimeShirtChart = () => {
             <div
               key={index}
               style={{
-                width: "clamp(30px, 14vw, 130px)",
+                width: "clamp(40px, 13vw, 220px)",
                 textAlign: "center",
                 fontSize: "clamp(0.75rem, 1.2vw, 1.5rem)",
                 fontWeight: "bold",

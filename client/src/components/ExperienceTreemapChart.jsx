@@ -87,7 +87,7 @@ const renderAnimatedTreemapCell = (props) => {
         textAnchor="middle"
         dominantBaseline="central"
         fill={textColor}
-        fontSize="clamp(20px, 2vw, 28px)"
+        fontSize={Math.max(12, Math.min(44, Math.min(width, height) * 0.18))}
         fontWeight="bold"
         style={{
           pointerEvents: "none",
@@ -162,9 +162,9 @@ const ExperienceTreemapChart = () => {
           <div
             key={i}
             style={{
-              width: "clamp(34px, 6vw, 90px)",
-              height: "clamp(34px, 6vw, 90px)",
-              fontSize: "clamp(0.5rem, 1.2vw, 1rem)",
+              width: "clamp(34px, 5vw, 120px)",
+              height: "clamp(34px, 5vw, 120px)",
+              fontSize: "clamp(0.5rem, 1.2vw, 1.1rem)",
               borderRadius: "50%",
               backgroundColor: "#faf7f2",
               border: `clamp(2px, 0.35vw, 5px) solid ${label.color}`,
