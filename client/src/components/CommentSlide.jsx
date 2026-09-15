@@ -88,7 +88,7 @@ const CommentSlide = () => {
           className="floating-comment"
           style={{
             bottom: `-${8 + entry.lane * 3}%`,
-            left: `${entry.left}%`,
+            left: `clamp(0.5rem, ${entry.left}%, calc(100% - 0.5rem))`,
             animationDelay: `${entry.delay}s`,
           }}
         >

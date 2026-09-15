@@ -6,8 +6,11 @@ export const LoginWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100vh;
-  padding-top: 2rem;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: max(1rem, env(safe-area-inset-top)) 1rem max(1rem, env(safe-area-inset-bottom));
+  gap: 1rem;
+  overflow-y: auto;
   background-color: #ffffffff; /* gris claro tipo Adidas */
 `;
 
@@ -36,7 +39,7 @@ export const LoginContainer = styled.div`
 
 // Main login title (LOG IN)
 export const Title = styled.h2`
-  font-size: 0.5 rem; 
+  font-size: 1.25rem;
   font-family: "adineue PRO Bold", sans-serif;
   text-align: left;
   text-transform: uppercase;
@@ -55,7 +58,7 @@ export const Title3 = styled.h2`
   font-family: "adineue PRO Light", sans-serif;
   text-align: left;
   color: #000000ff;
-  font-size: 0.5 rem; 
+  font-size: 0.875rem;
 `;
 
 // Container for field label
@@ -90,7 +93,7 @@ export const Button = styled.button`
   align-items: center;
   cursor: pointer;
   transition: opacity 0.2s ease;
-  margin-top: 22rem; // ⚠️ Valor alto: puede afectar en pantallas pequeñas
+  margin-top: 1.5rem;
 
   &:hover {
     opacity: 0.85;
@@ -125,7 +128,8 @@ export const BackButton = styled(Link)`
   text-decoration: none;
   gap: 0.5rem;
   width: 100%; /* Ocupa todo el ancho disponible */
-  margin-left: 3rem; /* Añade margen a la izquierda */
+  margin-left: 0;
+  align-self: stretch;
 
   &:hover {
     text-decoration: underline;

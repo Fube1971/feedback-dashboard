@@ -21,6 +21,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  min-width: 0;
 
   @media (min-width: 768px) {
     min-height: auto;
@@ -71,6 +72,9 @@ export const FeedbackItem = styled.li`
   border: 1px solid #000;
   padding: 1rem;
   margin-bottom: 1rem;
+  min-width: 0;
+  gap: 1rem;
+  flex-wrap: wrap;
 `;
 
 // Text section for each feedback (comment + keyword)
@@ -79,6 +83,8 @@ export const FeedbackText = styled.p`
   margin: 0;
   font-size: 0.875rem;
   color: #000;
+  min-width: 0;
+  overflow-wrap: anywhere;
 `;
 
 // Group of action buttons (Approve / Reject)
@@ -86,6 +92,7 @@ export const ButtonGroup = styled.div`
   display: flex;
   gap: 0.5rem;
   margin-left: 1rem;
+  flex-wrap: wrap;
 `;
 
 // Button used to approve or reject feedback
@@ -100,6 +107,12 @@ export const ActionButton = styled.button`
   color: ${(props) => (props.reject ? "#fff" : "#000")};
   cursor: pointer;
   transition: all 0.2s ease;
+  min-height: 44px;
+
+  @media (max-width: 420px) {
+    flex: 1 1 8rem;
+    padding-inline: 0.75rem;
+  }
 
   &:hover {
     opacity: 0.8;

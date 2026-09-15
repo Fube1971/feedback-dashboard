@@ -39,6 +39,8 @@ const Carousel = ({ slides, duration = 8000 }) => {
         minHeight: 0,
         position: "relative",
         overflow: "hidden",
+          minWidth: 0,
+          contain: "layout paint",
       }}
     >
       <AnimatePresence mode="wait">

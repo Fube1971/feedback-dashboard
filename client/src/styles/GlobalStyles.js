@@ -43,6 +43,8 @@ const GlobalStyles = createGlobalStyle`
 
   html {
     font-size: 10px; /* Base size to make rem scaling easier */
+    min-width: 0;
+    overflow-x: hidden;
   }
 
   /*  Global Body Typography */
@@ -54,6 +56,8 @@ const GlobalStyles = createGlobalStyle`
     line-height: 1.5;
     color: #000;
     background-color: #fff;
+    min-width: 0;
+    overflow-x: hidden;
   }
 
   /* Headings and Text Defaults */
@@ -70,6 +74,8 @@ const GlobalStyles = createGlobalStyle`
 
   input, textarea, select {
     font-family: inherit;
+    max-width: 100%;
+    font-size: 16px;
   }
 
   /*  Anchor Style Reset */

@@ -24,6 +24,8 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-height: min(100dvh, 720px);
+  min-width: 0;
 
   @media (min-width: 768px) {
     min-height: auto;
@@ -55,6 +57,7 @@ export const CardButton = styled.button`
   border: 1px solid #d1d5db;
   border-radius: 4px;
   text-align: left;
+  min-width: 0;
   cursor: pointer;
   transition: box-shadow 0.2s ease;
 
@@ -75,6 +78,8 @@ export const CardIcon = styled.div`
 export const CardContent = styled.div`
   display: flex;
   flex-direction: column;
+  min-width: 0;
+  overflow-wrap: anywhere;
 `;
 
 export const CardTitle = styled.h3`
@@ -109,7 +114,7 @@ export const LogoutButton = styled.button`
   cursor: pointer;
   display: flex;
   justify-content: space-between;
-  margin-top: 25rem; /* ⚠️ Consider reducing this for smaller screens */
+  margin-top: 0;
   align-items: center;
   font-family: "adineue PRO Bold", sans-serif;
   transition: opacity 0.2s ease;

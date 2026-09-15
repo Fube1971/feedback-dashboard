@@ -47,14 +47,26 @@ export const Card = styled.div`
   background-color: #fff;
   box-shadow: 0 0 20px rgba(223, 90, 37, 0.1);
   border-radius: 8px;
+  min-width: 0;
+
+  @media (max-width: 600px) and (orientation: portrait) {
+    flex-direction: column;
+    justify-content: center;
+    max-height: 82%;
+  }
 `;
 
 // QR code image
 export const QRImage = styled.img`
   width: min(42vw, 42vh, 500px);
+  max-width: 100%;
   height: auto;
   max-height: 58vh;
   object-fit: contain;
+
+  @media (max-width: 600px) and (orientation: portrait) {
+    width: min(52vw, 30vh, 240px);
+  }
 `;
 
 // Container for all text beside the QR

@@ -22,6 +22,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  min-width: 0;
 
   @media (min-width: 768px) {
     min-height: auto;
@@ -74,6 +75,8 @@ export const FeedbackItem = styled.li`
   border: 1px solid #000;
   padding: 1rem;
   margin-bottom: 1rem;
+  min-width: 0;
+  overflow-wrap: anywhere;
 `;
 
 // Label for text blocks like comment, moderator, date
@@ -102,6 +105,7 @@ export const ToggleButton = styled.button`
   color: #000;
   cursor: pointer;
   margin-top: 0.5rem;
+  min-height: 44px;
 
   &:hover {
     opacity: 0.8;

@@ -50,9 +50,9 @@ const StaffRatingChart = () => {
     const color = COLORS[index % COLORS.length];
     const logo = color === "#111111" ? adidasLogoWhite : adidasLogoBlack;
 
-    const blockSize = height;
-    const ratingMaxWidth = Math.max(140, Math.min(600, width * 3));
-    const ratingBarLength = (value / 5) * ratingMaxWidth;
+    const blockSize = Math.max(26, Math.min(56, height));
+    const ratingMaxWidth = Math.max(64, Math.min(520, width - blockSize * 2));
+    const ratingBarLength = (Math.max(0, value) / 5) * ratingMaxWidth;
     const totalWidth = blockSize + ratingMaxWidth + blockSize;
 
     return (
@@ -143,11 +143,11 @@ const StaffRatingChart = () => {
 
   // Custom Y-axis tick showing each day inside a colored circle
   const CustomYAxisTick = ({ x, y, payload, index }) => {
-    const barHeight = 56;
+    const barHeight = 34;
     const radius = barHeight / 2;
     const color = COLORS[index % COLORS.length];
     const label = payload.value;
-    const xOffset = 70; // move label circle further left
+    const xOffset = 38;
 
     return (
       <g transform={`translate(${x - xOffset}, ${y - radius})`}>
@@ -163,7 +163,7 @@ const StaffRatingChart = () => {
           x={0}
           y={radius + 5}
           textAnchor="middle"
-          fontSize={14}
+          fontSize={11}
           fill="#111"
           fontWeight="bold"
         >
@@ -207,7 +207,7 @@ const StaffRatingChart = () => {
           <BarChart
             layout="vertical"
             data={data}
-            margin={{ top: 20, bottom: 20, left: 85, right: 20 }}
+            margin={{ top: 12, bottom: 12, left: 48, right: 8 }}
             barCategoryGap="20%"
           >
             <XAxis type="number" domain={[0, 5]} stroke="#000" hide />
@@ -215,7 +215,7 @@ const StaffRatingChart = () => {
               type="category"
               dataKey="day"
               tick={<CustomYAxisTick />}
-              width={90}
+              width={52}
               axisLine={false}
               tickLine={false}
             />

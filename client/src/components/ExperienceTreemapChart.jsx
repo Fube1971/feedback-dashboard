@@ -138,7 +138,7 @@ const ExperienceTreemapChart = () => {
         style={{
           textAlign: "center",
           margin: "0 0 clamp(0.5rem, 1vh, 1rem)",
-          fontSize: "clamp(24px, 3vw, 36px)",
+          fontSize: "clamp(0.9rem, 3vw, 2.25rem)",
           fontFamily: "Arial, sans-serif",
           color: "black",
         }}
@@ -162,8 +162,8 @@ const ExperienceTreemapChart = () => {
           <div
             key={i}
             style={{
-              width: "clamp(42px, 6vw, 90px)",
-              height: "clamp(42px, 6vw, 90px)",
+              width: "clamp(34px, 6vw, 90px)",
+              height: "clamp(34px, 6vw, 90px)",
               fontSize: "clamp(0.5rem, 1.2vw, 1rem)",
               borderRadius: "50%",
               backgroundColor: "#faf7f2",
@@ -181,7 +181,8 @@ const ExperienceTreemapChart = () => {
       </div>
 
       {/* Treemap Chart */}
-      <ResponsiveContainer width="100%" height="100%">
+      <div style={{ width: "100%", flex: 1, minHeight: 0 }}>
+        <ResponsiveContainer width="100%" height="100%">
         <Treemap
           data={data}
           dataKey="rating"
@@ -192,7 +193,8 @@ const ExperienceTreemapChart = () => {
           type="flat"
           isAnimationActive={false}
         />
-      </ResponsiveContainer>
+        </ResponsiveContainer>
+      </div>
     </div>
   );
 };

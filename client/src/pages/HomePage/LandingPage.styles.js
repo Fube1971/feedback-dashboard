@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 
 // Full-page container
 export const Container = styled.div`
-  min-height: 100vh;
+  min-height: 100dvh;
   background-color: white;
   display: flex;
   flex-direction: column;
@@ -26,6 +26,7 @@ export const HeaderContent = styled.div`
   margin: 0 auto;
   padding: 0.75rem 1rem;
   display: flex;
+  min-width: 0;
   align-items: center;
   justify-content: space-between;
 
@@ -49,16 +50,14 @@ export const LogoContainer = styled.div`
 `;
 
 export const LogoImage = styled.img`
-  margin: 1rem;
-  height: 45rem; 
+  margin: 0.5rem;
+  height: clamp(2rem, 10vw, 3rem);
+  max-width: 40vw;
   width: auto;
   object-fit: contain;
 
-  @media (min-width: 429px) {
-    height: 2.5rem;
-  }
-
   @media (min-width: 1024px) {
+    margin: 1rem;
     height: 5rem;
   }
 `;
@@ -123,6 +122,9 @@ export const QRSection = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  min-width: 0;
+  width: 100%;
+  padding: clamp(0.5rem, 4vw, 2rem);
 `;
 
 export const FeaturesSection = styled.div`
@@ -310,8 +312,8 @@ export const HeaderLine = styled.div`
 `;
 
 export const QRImage = styled.img`
-  width: 200%;
-  max-width: 600px;
+  width: 100%;
+  max-width: min(600px, 100%);
   height: auto;
   display: block;
   margin: 0 auto;

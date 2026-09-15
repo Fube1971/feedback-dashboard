@@ -45,9 +45,9 @@ const shoeColorCycle = [shoeBlue, shoeGreen, shoeBlack, shoeRed, shoeGray];
 
 // Custom bar shape: stacked boxes + shoe + rating number
 const ShoeBoxStack = ({ x, y, width, height, value, index }) => {
-  const boxHeight = 70;
-  const boxWidth = 170;
-  const shoeSize = 150;
+  const boxWidth = Math.max(38, Math.min(112, width * 2.4));
+  const boxHeight = Math.max(24, Math.min(58, boxWidth * 0.42));
+  const shoeSize = Math.max(34, Math.min(100, boxWidth * 0.88));
   const safeValue = Math.max(0, Math.round(value || 0)); // Ensure value is positive integer
   const boxes = Array.from({ length: safeValue }); // One box per rating level
   const totalStackHeight = boxHeight * safeValue;
@@ -109,7 +109,7 @@ const COLORS = ["#0074D9", "#2ECC40", "#111111", "#FF4136", "#AAAAAA"];
 
 // Custom X-axis tick component showing day inside a styled circle
 const CustomXAxisTick = ({ x, y, payload, index }) => {
-  const radius = 34;
+  const radius = 22;
   const color = COLORS[index % COLORS.length];
   const label = payload.value;
 
@@ -121,7 +121,7 @@ const CustomXAxisTick = ({ x, y, payload, index }) => {
         r={radius}
         fill="#faf7f2"
         stroke={color}
-        strokeWidth={6}
+        strokeWidth={4}
       />
       <text
         x={0}
@@ -177,7 +177,7 @@ const GeneralRatingChart = () => {
               dataKey="day"
               tick={<CustomXAxisTick />}
               interval={0}
-              height={90}
+              height={60}
               axisLine={false}
               tickLine={false}
             />
@@ -186,7 +186,6 @@ const GeneralRatingChart = () => {
             <Bar
               dataKey="rating"
               fill="#ffffff00"
-              barSize={48}
               shape={(props) => (
                 <ShoeBoxStack
                   x={props.x}

@@ -3,7 +3,9 @@ import styled, { keyframes } from "styled-components";
 // Main container for the display page layout
 export const Container = styled.div`
   width: 100%;
+  height: 100vh;
   height: 100dvh;
+  min-height: 100vh;
   min-height: 100dvh;
   overflow: hidden;
   background-color: white;
@@ -34,6 +36,7 @@ export const HeaderContent = styled.div`
   gap: clamp(0.5rem, 2vw, 2rem);
   padding: clamp(0.35rem, 1.2vw, 0.9rem) clamp(0.65rem, 3vw, 2.5rem);
   box-sizing: border-box;
+  min-height: 44px;
 `;
 
 // Fade-in animation for logo when header loads
@@ -96,6 +99,7 @@ export const CarouselWrapper = styled.div`
   align-items: center;
   justify-content: center;
   padding: 0;
+  min-width: 0;
 `;
 
 export const HeaderLine = styled.div`

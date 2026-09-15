@@ -142,8 +142,8 @@ const WaitTimeShirtChart = () => {
         <div
           style={{
             position: "relative",
-            flex: "0 0 clamp(190px, 34vh, 300px)",
-            height: "clamp(190px, 34vh, 300px)",
+            flex: "0 0 clamp(120px, 30vh, 280px)",
+            height: "clamp(120px, 30vh, 280px)",
             width: "100%",
             maxWidth: "1600px",
             boxSizing: "border-box",
@@ -181,7 +181,7 @@ const WaitTimeShirtChart = () => {
                   key={index}
                   style={{
                     position: "relative",
-                    width: "clamp(42px, 12vw, 130px)",
+                    width: "clamp(30px, 14vw, 130px)",
                     height: "100%",
                     minWidth: 0,
                   }}
@@ -229,7 +229,7 @@ const WaitTimeShirtChart = () => {
             <div
               key={index}
               style={{
-                width: "clamp(42px, 12vw, 130px)",
+                width: "clamp(30px, 14vw, 130px)",
                 textAlign: "center",
                 fontSize: "clamp(0.75rem, 1.2vw, 1.5rem)",
                 fontWeight: "bold",

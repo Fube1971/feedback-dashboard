@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 // Main layout wrapper for the form page
 export const Container = styled.div`
-  min-height: 100vh;
+  min-height: 100dvh;
   background-color: white;
 `;
 
@@ -11,12 +11,13 @@ export const Container = styled.div`
 export const FormWrapper = styled.div`
   max-width: 32rem;
   margin: 0 auto;
-  padding: 3rem 2rem;
+  padding: clamp(1.5rem, 6vw, 3rem) clamp(1rem, 5vw, 2rem);
+  width: 100%;
 `;
 
 // Wrapper used for the confirmation screen (centered)
 export const CenteredContainer = styled.div`
-  min-height: 100vh;
+  min-height: 100dvh;
   background-color: white;
   display: flex;
   align-items: center;
@@ -27,14 +28,15 @@ export const CenteredContainer = styled.div`
 export const ConfirmationWrapper = styled.div`
   max-width: 32rem;
   margin: 0 auto;
-  padding: 3rem 2rem;
+  width: 100%;
+  padding: clamp(4rem, 12vw, 3rem) clamp(1rem, 5vw, 2rem);
   text-align: center;
 `;
 
 // Header section of the form (logo + slogan)
 export const Header = styled.div`
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: clamp(1.5rem, 6vw, 3rem);
 `;
 
 // Logo container adjusts spacing based on submission status
@@ -116,7 +118,9 @@ export const HeartButton = styled.button`
   border: none;
   cursor: pointer;
   transition: all 0.3s ease;
-  padding: 0;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0.25rem;
 
   &:hover {
     transform: scale(1.1);
@@ -137,7 +141,7 @@ export const TextInput = styled.input`
   height: 3rem;
   border: 2px solid #000000ff;
   padding: 0.75rem 1rem;
-  font-size: 0.875rem;
+  font-size: 16px;
   font-weight: normal;
 
   &:focus {
@@ -152,7 +156,7 @@ export const TextArea = styled.textarea`
   height: 6rem;
   border: 2px solid #000000ff;
   padding: 0.75rem 1rem;
-  font-size: 0.875rem;
+  font-size: 16px;
   font-weight: normal;
   resize: none;
 
@@ -258,8 +262,8 @@ export const ConfirmationContent = styled.div`
 // "Back to main page" link at the top left
 export const BackButton = styled(Link)`
   position: absolute;
-  top: 2rem;
-  left: 2rem;
+  top: max(1rem, env(safe-area-inset-top));
+  left: max(1rem, env(safe-area-inset-left));
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -267,6 +271,7 @@ export const BackButton = styled(Link)`
   text-decoration: none;
   font-weight: 700;
   font-size: 0.875rem;
+  min-height: 44px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   transition: all 0.2s ease;

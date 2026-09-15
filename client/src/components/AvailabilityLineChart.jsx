@@ -71,7 +71,7 @@ if (!document.getElementById("ball-animations")) {
 
 // Custom rendering for each dot (ball)
 const CustomBallDot = ({ cx, cy, value, index }) => {
-  const size = value * 20 + 24; // Adjust size based on rating
+  const size = Math.max(22, Math.min(72, value * 12 + 18));
   const offset = size / 2;
   const [visible, setVisible] = useState(false);
 
@@ -106,7 +106,7 @@ const CustomBallDot = ({ cx, cy, value, index }) => {
         y={cy - offset - 10}
         textAnchor="middle"
         fill="#000"
-        fontSize={16}
+        fontSize={12}
         fontWeight="bold"
         style={{
           opacity: visible ? 1 : 0,
@@ -123,7 +123,7 @@ const CustomBallDot = ({ cx, cy, value, index }) => {
 const COLORS = ["#0074D9", "#2ECC40", "#111111", "#FF4136", "#AAAAAA"];
 
 const CustomXAxisTick = ({ x, y, payload, index }) => {
-  const radius = 30;
+  const radius = 20;
   const color = COLORS[index % COLORS.length];
   const label = payload.value;
 
@@ -135,13 +135,13 @@ const CustomXAxisTick = ({ x, y, payload, index }) => {
         r={radius}
         fill="#faf7f2"
         stroke={color}
-        strokeWidth={6}
+        strokeWidth={4}
       />
       <text
         x={0}
         y={5}
         textAnchor="middle"
-        fontSize={11}
+          fontSize={9}
         fontWeight="bold"
         fill="#111"
       >
@@ -187,7 +187,7 @@ const AvailabilityLineChart = () => {
         style={{
           width: "90%",
           maxWidth: "1200px",
-          height: "calc(100% - 5rem)",
+          height: "calc(100% - clamp(3rem, 10vh, 5rem))",
           minHeight: 0,
           overflow: "hidden",
           position: "relative",
@@ -203,11 +203,11 @@ const AvailabilityLineChart = () => {
           }}
         >
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={data} margin={{ top: 70, bottom: 70, left: 25, right: 25 }}>
+            <LineChart data={data} margin={{ top: 42, bottom: 48, left: 12, right: 12 }}>
             <XAxis
               dataKey="day"
               tick={<CustomXAxisTick />}
-              height={90}
+              height={58}
               interval={0}
               axisLine={false}
               tickLine={false}
