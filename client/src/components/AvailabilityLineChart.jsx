@@ -71,19 +71,9 @@ if (!document.getElementById("ball-animations")) {
 }
 
 // Custom rendering for each dot (ball)
-const CustomBallDot = ({ cx, cy, value, index, chartWidth, chartHeight }) => {
+const CustomBallDot = ({ cx, cy, value, index, minBallSize, maxBallSize }) => {
   const clampedRating = Math.max(1, Math.min(5, Number(value) || 1));
   const normalized = (clampedRating - 1) / 4;
-  const isMobile = chartWidth > 0 && chartWidth < 600;
-  const minBallSize = isMobile
-    ? Math.max(34, Math.min(44, chartWidth * 0.12))
-    : 85;
-  const maxBallSize = Math.max(
-    minBallSize + (isMobile ? 20 : 30),
-    isMobile
-      ? Math.min(78, Math.max(44, chartWidth * 0.2))
-      : Math.min(180, Math.min(chartWidth * 0.1, chartHeight * 0.3))
-  );
   const size = minBallSize + normalized * (maxBallSize - minBallSize);
   const offset = size / 2;
   const [visible, setVisible] = useState(false);
@@ -168,7 +158,21 @@ const CustomXAxisTick = ({ x, y, payload, index, chartWidth }) => {
 const AvailabilityLineChart = () => {
   const data = useMetricByDay("availability");
   const [chartRef, chartSize] = useResizeObserver();
+  const isMobile = chartSize.width > 0 && chartSize.width < 600;
+  const minBallSize = isMobile
+    ? Math.max(34, Math.min(44, chartSize.width * 0.12))
+    : 85;
+  const maxBallSize = Math.max(
+    minBallSize + (isMobile ? 20 : 30),
+    isMobile
+      ? Math.min(78, Math.max(44, chartSize.width * 0.2))
+      : Math.min(180, Math.min(chartSize.width * 0.1, chartSize.height * 0.3))
+  );
   const dateRadius = Math.max(16, Math.min(34, chartSize.width * 0.025));
+  const requiredSideMargin = Math.max(
+    maxBallSize / 2 + 16,
+    dateRadius + 16
+  );
 
   return (
     <div
@@ -225,8 +229,8 @@ const AvailabilityLineChart = () => {
               margin={{
                 top: chartSize.width < 600 ? 70 : 110,
                 bottom: chartSize.width < 600 ? 64 : 86,
-                left: 12,
-                right: 12,
+                left: requiredSideMargin,
+                right: requiredSideMargin,
               }}
             >
             <XAxis
@@ -247,8 +251,8 @@ const AvailabilityLineChart = () => {
               dot={(props) => (
                 <CustomBallDot
                   {...props}
-                  chartWidth={chartSize.width}
-                  chartHeight={chartSize.height}
+                  minBallSize={minBallSize}
+                  maxBallSize={maxBallSize}
                 />
               )}
               activeDot={false}
