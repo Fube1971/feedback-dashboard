@@ -10,7 +10,25 @@ A full-stack portfolio project for collecting, moderating, and visualizing in-st
 - **Customer survey:** [retail-feedback-dashboard.vercel.app/feedback-form](https://retail-feedback-dashboard.vercel.app/feedback-form)
 - **Visualization display:** [retail-feedback-dashboard.vercel.app/display](https://retail-feedback-dashboard.vercel.app/display)
 
-The administrator area requires a Firebase Authentication account. Login credentials are intentionally not included in this repository.
+The administrator interface is protected and is not available with public credentials. Its functionality can be reviewed through the Admin Dashboard Walkthrough below.
+
+## Admin Dashboard Walkthrough
+
+The administrator dashboard is protected with Firebase Authentication, and public login credentials are intentionally not shared.
+
+The following video demonstrates the complete administrative workflow:
+
+- Secure administrator login
+- Navigation through the protected dashboard
+- Review of pending customer feedback
+- Approval and rejection of written comments
+- Moderation history
+- Modification of previous moderation decisions
+- Real-time integration between Firestore and the public visualization display
+
+[▶ Watch the Admin Dashboard Walkthrough](https://github.com/Fube1971/feedback-dashboard/blob/main/docs/media/AdminPanel.mp4)
+
+> The video provides a read-only demonstration of the protected administration workflow without exposing administrator credentials.
 
 ## Project Goals
 
@@ -84,7 +102,7 @@ Example document shape:
   consent: "si",
   status: "pending",
   timestamp: Timestamp,
-  moderatedBy: "admin@example.com", // added during moderation
+  moderatedBy: "authenticated-moderator", // added during moderation
   moderatedAt: Timestamp             // added during moderation
 }
 ```
@@ -160,12 +178,18 @@ If a date has no real responses, `demoData.js` generates a stable rating between
 
 | Visualization | Data | Implementation |
 | --- | --- | --- |
-| General rating | Average of all four rating fields | A Recharts `BarChart` uses a custom SVG bar shape. The rounded score determines how many shoebox PNGs are stacked, and a shoe image is placed above each stack. Framer Motion animates the entrance. |
+| General rating | Average of all four rating fields | A Recharts `BarChart` uses a custom SVG renderer to create responsive stacks of shoebox artwork. The rounded daily score determines the number of boxes, while a shoe image identifies each day and Framer Motion animates the entrance. |
 | Product availability | Daily `availability` average | A Recharts `LineChart` connects five days. Custom data-point renderers replace ordinary dots with ball PNGs; the ball size is derived from the rating and CSS keyframes create bounce and idle movement. |
-| Staff service | Daily `staff` average | A horizontal Recharts `BarChart` renders custom SVG rows. Bar length is calculated as `rating / 5` of the available width, and the logo animates toward the end of the filled area. |
-| Wait time | Daily `waitTime` average | A custom responsive React layout rounds each score to determine the number of overlapping shirt images. Dates appear on label shirts, the rack line shares the same coordinate space as the hangers, and the precise score remains visible below each group. |
+| Staff service | Daily `staff` average | A custom responsive React/CSS visualization renders five fixed-width rating tracks. Only the colored fill changes according to `rating / 5`, while an animated Adidas marker moves to the corresponding endpoint. This keeps all rows aligned across desktop and mobile resolutions. |
+| Wait time | Daily `waitTime` average | A custom responsive React layout rounds each score to determine the number of animated shirt images displayed for each day. The exact daily rating and date remain visible below every group, and the layout scales across desktop, tablet, and mobile screens. |
 | Overall experience | Daily `experience` average | A Recharts `Treemap` uses the rating as `dataKey`, making higher scores occupy larger areas. A custom cell renderer replaces rectangles with shoebox artwork and overlays the numeric score. |
 | Approved comments | Firestore comment and keyword fields | An `onSnapshot` listener supplies live approved responses. `useMemo` assigns stable horizontal lanes and staggered delays, while CSS moves cards upward from below the viewport. |
+
+### Responsive visualization system
+
+The visualization components adapt their geometry to the actual container dimensions. Desktop displays use larger branded assets to take advantage of the available screen, while tablet and mobile layouts reduce image sizes and spacing to prevent clipping and horizontal overflow.
+
+The availability chart also reserves responsive horizontal margins for its custom ball markers and date labels. Staff-rating tracks maintain a constant maximum width, ensuring that only the filled percentage changes with the score.
 
 The `DisplayPage` places these visualizations, the comments, and the QR code into a carousel. `AnimatePresence` from Framer Motion handles the transition between slides while the header remains visible.
 
@@ -199,23 +223,24 @@ The `DisplayPage` places these visualizations, the comments, and the QR code int
 
 ```text
 feedback-dashboard/
-    client/
-        public/                  # Fonts, brand assets, QR code and metadata
-             src/
-                     assets/              # Custom chart images
-                     components/          # Form, charts, carousel and route guards
-                     hooks/               # Firestore aggregation logic
-                     pages/               # Public, display and admin screens
-                     services/            # Firebase initialization
-                     styles/              # Global themes and styles
-                    utils/               # Deterministic demo-data generator
-             vercel.json              # SPA route rewrites
-        server/
-            controllers/             # Demonstration API handlers
-                 routes/                  # Express feedback routes
-                     index.js                 # Express and Socket.IO entry point
-                package.json
- README.md
+├── client/
+│   ├── public/                 # Fonts, brand assets, QR code and metadata
+│   ├── src/
+│   │   ├── assets/             # Custom chart images
+│   │   ├── components/         # Forms, charts, carousel and route guards
+│   │   ├── hooks/              # Firestore aggregation and responsive sizing
+│   │   ├── pages/              # Public, display and admin screens
+│   │   ├── services/           # Firebase initialization
+│   │   ├── styles/             # Global themes and styles
+│   │   └── utils/              # Deterministic demo-data generator
+│   └── vercel.json             # SPA route rewrites
+├── server/
+│   ├── controllers/            # Demonstration API handlers
+│   ├── routes/                 # Express feedback routes
+│   ├── index.js                # Express and Socket.IO entry point
+│   └── package.json
+├── LICENSE
+└── README.md
 ```
 
 ## Routes
