@@ -27,7 +27,6 @@
   Header,
   LogoContainer,
   Logo,
-  LogoStripes,
   Slogan,
   QuestionSection,
   QuestionTitle,

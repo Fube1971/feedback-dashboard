@@ -14,7 +14,6 @@
 
 import React from 'react';
 import { Navigate } from 'react-router-dom';
-import { auth } from '../services/firebase'; 
 
 // Receives `user` prop (from Firebase Auth) and wraps the child route
 const ProtectedRoute = ({ user, children }) => {

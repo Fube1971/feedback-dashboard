@@ -23,7 +23,6 @@ import {
   XAxis,
   YAxis,
   Tooltip,
-  ResponsiveContainer,
 } from "recharts";
 import { useMetricByDay } from "../hooks/useMetricByDay";
 
@@ -35,26 +34,6 @@ import ball4 from "../assets/ball-4.png";
 import ball5 from "../assets/ball-5.png";
 
 const ballIcons = [ball1, ball2, ball3, ball4, ball5];
-
-// CSS animations: bounce on enter and floating idle motion
-const bounceKeyframes = `
-@keyframes bounceIn {
-  0% {
-    transform: scale(0.3) translateY(-100px);
-    opacity: 0;
-  }
-  50% {
-    transform: scale(1.05) translateY(10px);
-    opacity: 1;
-  }
-  70% {
-    transform: scale(0.95) translateY(-5px);
-  }
-  100% {
-    transform: scale(1) translateY(0);
-  }
-}
-`;
 
 const bounceAndFloatKeyframes = `
 @keyframes bounceIn {
