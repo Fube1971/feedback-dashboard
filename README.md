@@ -91,10 +91,10 @@ Example document shape:
 
 | Field | Type | Purpose |
 | --- | --- | --- |
-| `availability` | Number (1â€“5) | Product availability rating |
-| `staff` | Number (1â€“5) | Staff service rating |
-| `waitTime` | Number (1â€“5) | Waiting-time rating |
-| `experience` | Number (1â€“5) | Overall shopping experience |
+| `availability` | Number (1-5) | Product availability rating |
+| `staff` | Number (1-5) | Staff service rating |
+| `waitTime` | Number (1-5) | Waiting-time rating |
+| `experience` | Number (1-5) | Overall shopping experience |
 | `keywords` | String | Optional word describing the experience |
 | `comments` | String | Customer's written response |
 | `consent` | String | Whether the comment may be shown publicly |
@@ -199,23 +199,23 @@ The `DisplayPage` places these visualizations, the comments, and the QR code int
 
 ```text
 feedback-dashboard/
-â”œâ”€â”€ client/
-â”‚   â”œâ”€â”€ public/                  # Fonts, brand assets, QR code and metadata
-â”‚   â”œâ”€â”€ src/
-â”‚   â”‚   â”œâ”€â”€ assets/              # Custom chart images
-â”‚   â”‚   â”œâ”€â”€ components/          # Form, charts, carousel and route guards
-â”‚   â”‚   â”œâ”€â”€ hooks/               # Firestore aggregation logic
-â”‚   â”‚   â”œâ”€â”€ pages/               # Public, display and admin screens
-â”‚   â”‚   â”œâ”€â”€ services/            # Firebase initialization
-â”‚   â”‚   â”œâ”€â”€ styles/              # Global themes and styles
-â”‚   â”‚   â””â”€â”€ utils/               # Deterministic demo-data generator
-â”‚   â””â”€â”€ vercel.json              # SPA route rewrites
-â”œâ”€â”€ server/
-â”‚   â”œâ”€â”€ controllers/             # Demonstration API handlers
-â”‚   â”œâ”€â”€ routes/                  # Express feedback routes
-â”‚   â””â”€â”€ index.js                 # Express and Socket.IO entry point
-â”œâ”€â”€ package.json
-â””â”€â”€ README.md
+    client/
+        public/                  # Fonts, brand assets, QR code and metadata
+             src/
+                     assets/              # Custom chart images
+                     components/          # Form, charts, carousel and route guards
+                     hooks/               # Firestore aggregation logic
+                     pages/               # Public, display and admin screens
+                     services/            # Firebase initialization
+                     styles/              # Global themes and styles
+                    utils/               # Deterministic demo-data generator
+             vercel.json              # SPA route rewrites
+        server/
+            controllers/             # Demonstration API handlers
+                 routes/                  # Express feedback routes
+                     index.js                 # Express and Socket.IO entry point
+                package.json
+ README.md
 ```
 
 ## Routes
