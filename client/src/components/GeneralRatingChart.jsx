@@ -57,8 +57,7 @@ const ShoeBoxStack = ({
   const columnWidth = chartWidth > 0 ? chartWidth / 5 : width;
   const boxWidth = Math.max(48, Math.min(230, columnWidth * 0.65));
   const boxHeight = Math.max(28, Math.min(92, boxWidth * 0.4));
-  const shoeSize = boxWidth * 0.86;
-  const shoeOverlap = shoeSize * 0.1;
+  const shoeSize = boxWidth * 0.92;
   const safeValue = Math.max(0, Math.round(value || 0)); // Ensure value is positive integer
   const boxes = Array.from({ length: safeValue }); // One box per rating level
   const totalStackHeight = boxHeight * safeValue;
@@ -79,8 +78,8 @@ const ShoeBoxStack = ({
         {value.toFixed(1)}
       </text>
 
-      {/* Animated shoeboxes below the shoe */}
-      {boxes.slice(0, -1).map((_, i) => (
+      {/* Animated shoeboxes */}
+      {boxes.map((_, i) => (
         <motion.image
           key={i}
           href={boxImage}
@@ -97,11 +96,11 @@ const ShoeBoxStack = ({
         />
       ))}
 
-      {/* Shoe image at the top */}
+      {/* Shoe image resting directly on the top box */}
       <motion.image
         href={shoeImage}
         x={(boxWidth - shoeSize) / 2}
-        y={-totalStackHeight - shoeSize + shoeOverlap}
+        y={-totalStackHeight - shoeSize}
         width={shoeSize}
         height={shoeSize}
         initial={{ opacity: 0, y: 20 }}
@@ -112,22 +111,6 @@ const ShoeBoxStack = ({
         }}
       />
 
-      {/* Top box edge overlaps the shoe slightly, as if it is stored inside. */}
-      {safeValue > 0 && (
-        <motion.image
-          href={boxImage}
-          x={0}
-          y={-totalStackHeight}
-          height={boxHeight}
-          width={boxWidth}
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{
-            delay: 0.2 + (safeValue - 1) * 0.1 + index * 0.4,
-            duration: 0.3,
-          }}
-        />
-      )}
     </g>
   );
 };
