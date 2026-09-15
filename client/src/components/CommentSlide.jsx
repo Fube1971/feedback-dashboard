@@ -79,7 +79,7 @@ const CommentSlide = () => {
   }
 
   // Schedule comment placement in lanes
-  const lanes = 6; // Number of vertical lanes
+  const lanes = 5; // Number of vertical lanes
   const laneTimers = new Array(lanes).fill(0); // Track lane availability
   let timeCursor = 0; // Global time position
 
@@ -95,7 +95,7 @@ const CommentSlide = () => {
           laneTimers[i] = timeCursor + 25; // Reserve lane for 25s
           scheduled.push({
             item,
-            top: i * 140, // vertical spacing between lanes
+            top: `${(i / (lanes - 1)) * 78}%`, // vertical spacing between lanes
             left: Math.floor(Math.random() * 70), // random horizontal start (in %)
             delay: timeCursor, // delay before animation starts
           });

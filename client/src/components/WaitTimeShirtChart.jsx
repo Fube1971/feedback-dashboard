@@ -45,30 +45,27 @@ const WaitTimeShirtChart = () => {
   const data = useMetricByDay("waitTime");
 
   // Layout sizing (viewport-relative units)
-  const shirtHeightVH = 30;
-  const shirtWidthVW = 12;
-  const overlapOffsetVW = 3;
-
   return (
     <div
       style={{
         width: "100%",
-        height: "100dvh",
+        height: "100%",
+        minHeight: 0,
         overflow: "hidden",
         backgroundColor: "#fff",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        padding: "2vh 2vw",
+        padding: "clamp(0.5rem, 2vh, 1.5rem) clamp(0.5rem, 2vw, 2rem)",
         boxSizing: "border-box",
       }}
     >
       {/* Title */}
       <h2
         style={{
-          fontSize: "clamp(18px, 2vw, 32px)",
+          fontSize: "clamp(0.95rem, 2.2vw, 2rem)",
           fontWeight: "bold",
-          marginBottom: "2vh",
+          margin: "0 0 clamp(0.5rem, 1vh, 1rem)",
           textAlign: "center",
         }}
       >
@@ -82,19 +79,22 @@ const WaitTimeShirtChart = () => {
           width: "100%",
           maxWidth: "1600px",
           display: "flex",
-          justifyContent: "space-around",
+          justifyContent: "space-evenly",
           alignItems: "center",
           position: "relative",
+          minHeight: 0,
+          overflow: "hidden",
+          gap: "clamp(0.15rem, 1vw, 1rem)",
         }}
       >
         {/* Horizontal Rack Line */}
         <div
           style={{
             position: "absolute",
-            top: "41%",
+            top: "45%",
             left: 0,
             width: "100%",
-            height: "8px",
+            height: "clamp(3px, 0.5vw, 8px)",
             backgroundColor: "black",
             zIndex: 999,
           }}
@@ -123,12 +123,12 @@ const WaitTimeShirtChart = () => {
               <div
                 style={{
                   position: "relative",
-                  width: "30vw",
-                  maxWidth: "110px",
-                  minWidth: "70px",
+                  width: "clamp(42px, 9vw, 100px)",
+                  maxWidth: "100px",
+                  minWidth: "42px",
                   height: "auto",
-                  marginBottom: "1.5vh",
-                  transform: "translateY(-2vh)",
+                  marginBottom: "clamp(0.25rem, 1vh, 1rem)",
+                  transform: "translateY(-1vh)",
                 }}
               >
                 <img
@@ -146,7 +146,7 @@ const WaitTimeShirtChart = () => {
                     top: "50%",
                     left: "50%",
                     transform: "translate(-50%, -50%)",
-                    fontSize: "clamp(0.6rem, 1.2vw, 1.5rem)",
+                    fontSize: "clamp(0.45rem, 1.1vw, 1rem)",
                     fontWeight: "bold",
                     color: index === 2 ? "white" : "black",
                     textShadow: index === 2 ? "none" : "1px 1px 2px white",
@@ -163,10 +163,9 @@ const WaitTimeShirtChart = () => {
               <div
                 style={{
                   position: "relative",
-                  width: `calc(${shirtWidthVW}vw + ${
-                    (rounded - 1) * overlapOffsetVW
-                  }vw)`,
-                  height: `${shirtHeightVH}vh`,
+                  width: "clamp(42px, 12vw, 130px)",
+                  height: "clamp(120px, 32vh, 300px)",
+                  maxHeight: "48%",
                 }}
               >
                 {Array.from({ length: rounded }).map((_, i) => (
@@ -176,10 +175,10 @@ const WaitTimeShirtChart = () => {
                     alt={`shirt-${i}`}
                     style={{
                       position: "absolute",
-                      left: `${(rounded - 1 - i) * overlapOffsetVW}vw`,
+                      left: `${(rounded - 1 - i) * 12}%`,
                       bottom: 0,
-                      height: `${shirtHeightVH}vh`,
-                      width: `${shirtWidthVW}vw`,
+                      height: "100%",
+                      width: "100%",
                       objectFit: "contain",
                       zIndex: i,
                       animation: `slideBounceLeft 0.8s cubic-bezier(0.25, 1.25, 0.5, 1) ${

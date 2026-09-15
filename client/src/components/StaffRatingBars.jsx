@@ -45,13 +45,13 @@ const StaffRatingChart = () => {
 
   // Custom bar shape for each row
   const CustomStaffBar = (props) => {
-    const { x, y, height, index, value } = props;
+    const { x, y, width, height, index, value } = props;
 
     const color = COLORS[index % COLORS.length];
     const logo = color === "#111111" ? adidasLogoWhite : adidasLogoBlack;
 
     const blockSize = height;
-    const ratingMaxWidth = 600;
+    const ratingMaxWidth = Math.max(140, Math.min(600, width * 3));
     const ratingBarLength = (value / 5) * ratingMaxWidth;
     const totalWidth = blockSize + ratingMaxWidth + blockSize;
 
@@ -143,7 +143,7 @@ const StaffRatingChart = () => {
 
   // Custom Y-axis tick showing each day inside a colored circle
   const CustomYAxisTick = ({ x, y, payload, index }) => {
-    const barHeight = 100;
+    const barHeight = 56;
     const radius = barHeight / 2;
     const color = COLORS[index % COLORS.length];
     const label = payload.value;
@@ -177,35 +177,38 @@ const StaffRatingChart = () => {
     <div
       style={{
         width: "100%",
-        height: "100vh",
+        height: "100%",
+        minHeight: 0,
+        boxSizing: "border-box",
         backgroundColor: "white",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        justifyContent: "center",
+        justifyContent: "flex-start",
+        padding: "clamp(0.5rem, 2vh, 1.5rem) clamp(0.5rem, 2vw, 2rem)",
       }}
     >
       {/* Chart Title*/}
       <h2
         style={{
           color: "black",
-          fontSize: "28px",
+          fontSize: "clamp(1rem, 2.2vw, 1.75rem)",
           fontWeight: "bold",
-          marginBottom: "1px",
-          marginTop: "-8rem",
+          margin: "0 0 clamp(0.35rem, 1vh, 1rem)",
+          textAlign: "center",
         }}
       >
         ¿CÓMO TE ATENDIMOS?
       </h2>
 
       {/* Chart container */}
-      <div style={{ width: "90%", maxWidth: "1200px", height: "75%" }}>
+      <div style={{ width: "100%", maxWidth: "1200px", flex: 1, minHeight: 0 }}>
         <ResponsiveContainer>
           <BarChart
             layout="vertical"
             data={data}
-            margin={{ top: 20, bottom: 40, left: 100, right: 60 }}
-            barCategoryGap={30}
+            margin={{ top: 20, bottom: 20, left: 85, right: 20 }}
+            barCategoryGap="20%"
           >
             <XAxis type="number" domain={[0, 5]} stroke="#000" hide />
             <YAxis
@@ -219,7 +222,6 @@ const StaffRatingChart = () => {
             <Tooltip />
             <Bar
               dataKey="rating"
-              barSize={100}
               shape={(props) => <CustomStaffBar {...props} />}
               isAnimationActive={false}
             />

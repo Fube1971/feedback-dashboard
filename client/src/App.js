@@ -10,6 +10,7 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
+  useLocation,
 } from "react-router-dom";
 
 // Firebase
@@ -29,6 +30,49 @@ import DisplayPage from "./pages/DisplayPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+
+const AppRoutes = ({ user }) => {
+  const location = useLocation();
+  const isDisplayRoute = location.pathname === "/display";
+
+  return (
+    <div className="app-container">
+      {!isDisplayRoute && <Navbar />}
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/feedback-form" element={<FeedbackPage />} />
+        <Route path="/display" element={<DisplayPage />} />
+        <Route path="/admin-login" element={<AdminLogin />} />
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute user={user}>
+              <AdminHomePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin-pending"
+          element={
+            <ProtectedRoute user={user}>
+              <AdminPending />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin-history"
+          element={
+            <ProtectedRoute user={user}>
+              <AdminHistory />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="*" element={<div>404 - Page Not Found</div>} />
+      </Routes>
+      {!isDisplayRoute && <Footer />}
+    </div>
+  );
+};
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -69,48 +113,7 @@ const App = () => {
 
   return (
     <Router>
-      <div className="app-container">
-        <Navbar />
-        <Routes>
-          {/* Public Pages */}
-          <Route path="/" element={<HomePage />} />
-          <Route path="/feedback-form" element={<FeedbackPage />} />
-          <Route path="/display" element={<DisplayPage />} />
-
-          {/* Admin Login */}
-          <Route path="/admin-login" element={<AdminLogin />} />
-
-          {/* Protected Admin Routes */}
-          <Route
-            path="/admin"
-            element={
-              <ProtectedRoute user={user}>
-                <AdminHomePage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/admin-pending"
-            element={
-              <ProtectedRoute user={user}>
-                <AdminPending />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/admin-history"
-            element={
-              <ProtectedRoute user={user}>
-                <AdminHistory />
-              </ProtectedRoute>
-            }
-          />
-
-          {/* Catch-all route */}
-          <Route path="*" element={<div>404 - Page Not Found</div>} />
-        </Routes>
-        <Footer />
-      </div>
+      <AppRoutes user={user} />
     </Router>
   );
 };

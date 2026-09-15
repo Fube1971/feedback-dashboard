@@ -123,16 +123,21 @@ const ExperienceTreemapChart = () => {
     <div
       style={{
         width: "100%",
-        height: "80%",
+        height: "100%",
+        minHeight: 0,
         backgroundColor: "white",
-        padding: "0rem",
+        padding: "clamp(0.5rem, 1.5vh, 1.25rem) clamp(0.5rem, 2vw, 2rem)",
+        boxSizing: "border-box",
+        display: "flex",
+        flexDirection: "column",
+        overflow: "hidden",
       }}
     >
       {/* Title */}
       <h2
         style={{
           textAlign: "center",
-          marginBottom: "2rem",
+          margin: "0 0 clamp(0.5rem, 1vh, 1rem)",
           fontSize: "clamp(24px, 3vw, 36px)",
           fontFamily: "Arial, sans-serif",
           color: "black",
@@ -146,21 +151,23 @@ const ExperienceTreemapChart = () => {
         style={{
           display: "flex",
           justifyContent: "center",
-          gap: "10rem",
-          marginBottom: "2rem",
-          marginTop: "-1rem",
+          gap: "clamp(0.3rem, 2vw, 2rem)",
+          marginBottom: "clamp(0.4rem, 1vh, 1rem)",
+          marginTop: 0,
+          flexWrap: "wrap",
+          maxWidth: "100%",
         }}
       >
         {labels.map((label, i) => (
           <div
             key={i}
             style={{
-              width: "clamp(80px, 6vw, 110px)",
-              height: "clamp(80px, 6vw, 110px)",
-              fontSize: "clamp(12px, 1.5vw, 18px)",
+              width: "clamp(42px, 6vw, 90px)",
+              height: "clamp(42px, 6vw, 90px)",
+              fontSize: "clamp(0.5rem, 1.2vw, 1rem)",
               borderRadius: "50%",
               backgroundColor: "#faf7f2",
-              border: `6px solid ${label.color}`,
+              border: `clamp(2px, 0.35vw, 5px) solid ${label.color}`,
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -174,7 +181,7 @@ const ExperienceTreemapChart = () => {
       </div>
 
       {/* Treemap Chart */}
-      <ResponsiveContainer width="100%" height="80%">
+      <ResponsiveContainer width="100%" height="100%">
         <Treemap
           data={data}
           dataKey="rating"

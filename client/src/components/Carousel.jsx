@@ -32,7 +32,15 @@ const Carousel = ({ slides, duration = 8000 }) => {
   }, [slides.length, duration]);
 
   return (
-    <div style={{ width: "100%", height: "100vh", overflow: "hidden" }}>
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        minHeight: 0,
+        position: "relative",
+        overflow: "hidden",
+      }}
+    >
       <AnimatePresence mode="wait">
         <motion.div
           key={index} // Key triggers re-animation when slide changes
@@ -40,7 +48,14 @@ const Carousel = ({ slides, duration = 8000 }) => {
           animate={{ opacity: 1, x: 0 }}    // Fade in and center
           exit={{ opacity: 0, x: -100 }}    // Fade out and exit left
           transition={{ duration: 0.8 }}    // Animation timing
-          style={{ position: "absolute", width: "100%", height: "100%" }}
+          style={{
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            minHeight: 0,
+            overflow: "hidden",
+          }}
         >
           {slides[index]} {/* Render the current slide */}
         </motion.div>

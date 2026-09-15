@@ -23,6 +23,7 @@ import {
   XAxis,
   YAxis,
   Tooltip,
+  ResponsiveContainer,
 } from "recharts";
 import { useMetricByDay } from "../hooks/useMetricByDay";
 
@@ -70,7 +71,7 @@ if (!document.getElementById("ball-animations")) {
 
 // Custom rendering for each dot (ball)
 const CustomBallDot = ({ cx, cy, value, index }) => {
-  const size = value * 35 + 30; // Adjust size based on rating
+  const size = value * 20 + 24; // Adjust size based on rating
   const offset = size / 2;
   const [visible, setVisible] = useState(false);
 
@@ -122,7 +123,7 @@ const CustomBallDot = ({ cx, cy, value, index }) => {
 const COLORS = ["#0074D9", "#2ECC40", "#111111", "#FF4136", "#AAAAAA"];
 
 const CustomXAxisTick = ({ x, y, payload, index }) => {
-  const radius = 50;
+  const radius = 30;
   const color = COLORS[index % COLORS.length];
   const label = payload.value;
 
@@ -140,7 +141,7 @@ const CustomXAxisTick = ({ x, y, payload, index }) => {
         x={0}
         y={5}
         textAnchor="middle"
-        fontSize={14}
+        fontSize={11}
         fontWeight="bold"
         fill="#111"
       >
@@ -158,7 +159,9 @@ const AvailabilityLineChart = () => {
     <div
       style={{
         width: "100%",
-        height: "100vh",
+        height: "100%",
+        minHeight: 0,
+        boxSizing: "border-box",
         backgroundColor: "white",
         display: "flex",
         flexDirection: "column",
@@ -170,9 +173,10 @@ const AvailabilityLineChart = () => {
       <h2
         style={{
           color: "black",
-          fontSize: "28px",
+          fontSize: "clamp(1rem, 2.2vw, 1.75rem)",
           fontWeight: "bold",
-          marginBottom: "20px",
+          margin: "clamp(0.5rem, 1.5vh, 1.25rem) 1rem",
+          textAlign: "center",
         }}
       >
         ¿CÓMO CALIFICARÍAS LA DISPONIBILIDAD DE NUESTROS PRODUCTOS?
@@ -183,8 +187,9 @@ const AvailabilityLineChart = () => {
         style={{
           width: "90%",
           maxWidth: "1200px",
-          height: "75%",
-          overflow: "visible",
+          height: "calc(100% - 5rem)",
+          minHeight: 0,
+          overflow: "hidden",
           position: "relative",
         }}
       >
@@ -192,16 +197,13 @@ const AvailabilityLineChart = () => {
           style={{
             width: "100%",
             maxWidth: "1400px",
-            height: "650px",
+            height: "100%",
+            minHeight: 0,
             overflow: "visible",
           }}
         >
-          <LineChart
-            width={1300}
-            height={700}
-            data={data}
-            margin={{ top: 120, bottom: 120, left: 80, right: 80 }}
-          >
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart data={data} margin={{ top: 70, bottom: 70, left: 25, right: 25 }}>
             <XAxis
               dataKey="day"
               tick={<CustomXAxisTick />}
@@ -221,7 +223,8 @@ const AvailabilityLineChart = () => {
               activeDot={false}
               isAnimationActive={false}
             />
-          </LineChart>
+            </LineChart>
+          </ResponsiveContainer>
         </div>
       </div>
     </div>

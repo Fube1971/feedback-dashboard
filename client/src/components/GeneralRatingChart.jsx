@@ -109,7 +109,7 @@ const COLORS = ["#0074D9", "#2ECC40", "#111111", "#FF4136", "#AAAAAA"];
 
 // Custom X-axis tick component showing day inside a styled circle
 const CustomXAxisTick = ({ x, y, payload, index }) => {
-  const radius = 50;
+  const radius = 34;
   const color = COLORS[index % COLORS.length];
   const label = payload.value;
 
@@ -127,7 +127,7 @@ const CustomXAxisTick = ({ x, y, payload, index }) => {
         x={0}
         y={5}
         textAnchor="middle"
-        fontSize={14}
+        fontSize={11}
         fontWeight="bold"
         fill="#111"
       >
@@ -145,21 +145,24 @@ const GeneralRatingChart = () => {
     <div
       style={{
         width: "100%",
-        height: "90vh",
+        height: "100%",
+        minHeight: 0,
+        boxSizing: "border-box",
         backgroundColor: "white",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        justifyContent: "start",
-        paddingTop: "40px",
+        justifyContent: "flex-start",
+        padding: "clamp(0.5rem, 2vh, 1.5rem) clamp(0.5rem, 2vw, 2rem)",
       }}
     >
       {/* Chart Title */}
       <h2
         style={{
           color: "black",
-          fontSize: "32px",
-          marginBottom: "20px",
+          fontSize: "clamp(1rem, 2.5vw, 2rem)",
+          margin: "0 0 clamp(0.35rem, 1vh, 1rem)",
+          textAlign: "center",
           fontFamily: "Arial, sans-serif",
         }}
       >
@@ -167,7 +170,7 @@ const GeneralRatingChart = () => {
       </h2>
 
       {/* Bar Chart Container */}
-      <div style={{ width: "90%", height: "80%" }}>
+      <div style={{ width: "100%", flex: 1, minHeight: 0 }}>
         <ResponsiveContainer>
           <BarChart data={data} margin={{ top: 20, bottom: 40 }}>
             <XAxis
@@ -183,7 +186,7 @@ const GeneralRatingChart = () => {
             <Bar
               dataKey="rating"
               fill="#ffffff00"
-              barSize={60}
+              barSize={48}
               shape={(props) => (
                 <ShoeBoxStack
                   x={props.x}

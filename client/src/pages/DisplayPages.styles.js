@@ -2,13 +2,16 @@ import styled, { keyframes } from "styled-components";
 
 // Main container for the display page layout
 export const Container = styled.div`
+  width: 100%;
+  height: 100dvh;
+  min-height: 100dvh;
   overflow: hidden;
   background-color: white;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 `;
 
 // Optional header wrapper (used for animated branding)
@@ -16,24 +19,21 @@ export const Header = styled.header`
   border-bottom: 1px solid #fff;
   margin: 0;
   padding: 0;
+  flex-shrink: 0;
 `;
 
 // Internal header layout for logo + title
 export const HeaderContent = styled.div`
+  width: 100%;
+  min-width: 0;
   max-width: 90rem;
   margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.5rem 1rem;
-
-  @media (min-width: 640px) {
-    padding: 0.75rem 1.5rem;
-  }
-
-  @media (min-width: 1024px) {
-    padding: 0.75rem 2rem;
-  }
+  gap: clamp(0.5rem, 2vw, 2rem);
+  padding: clamp(0.35rem, 1.2vw, 0.9rem) clamp(0.65rem, 3vw, 2.5rem);
+  box-sizing: border-box;
 `;
 
 // Fade-in animation for logo when header loads
@@ -50,7 +50,8 @@ const fade = keyframes`
 
 // Animated Adidas logo image
 export const LogoImage = styled.img`
-  height: 2rem;
+  height: clamp(2rem, 7vw, 4rem);
+  max-width: 25%;
   width: auto;
   object-fit: contain;
   margin: 0;
@@ -65,10 +66,16 @@ export const LogoImage = styled.img`
 // Dynamic title text (used in some headers)
 export const Title = styled.h1`
   font-family: "adineue PRO Bold", sans-serif;
-  font-size: 1rem;
+  min-width: 0;
+  font-size: clamp(0.78rem, 2.4vw, 2rem);
   font-weight: bold;
   color: black;
   margin-left: auto;
+  text-align: right;
+  line-height: 1.1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   @media (min-width: 640px) {
     font-size: 1.5rem;
@@ -82,6 +89,9 @@ export const Title = styled.h1`
 // Wraps the chart carousel
 export const CarouselWrapper = styled.div`
   flex: 1;
+  min-height: 0;
+  position: relative;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -92,9 +102,11 @@ export const HeaderLine = styled.div`
   height: 2px;
   background-color: #000000ff; // gris más suave
   width: 100%;
+  flex-shrink: 0;
 `;
 
 export const DemoNotice = styled.p`
+  flex-shrink: 0;
   align-self: center;
   margin: 0.5rem 1rem 0;
   color: #5a5a5a;
