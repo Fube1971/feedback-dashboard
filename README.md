@@ -308,7 +308,7 @@ Install Command: npm install
 
 - Bryam Alexander Barreto Leguizamo
 - Daniela Fuentes Bello
-- Juan SebastiÃ¡n RodrÃ­guez RodrÃ­guez
+- Juan Sebastián Rodriguez Rodriguez
 
 ## Asset Disclaimer
 
