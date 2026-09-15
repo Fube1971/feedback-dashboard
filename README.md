@@ -25,7 +25,7 @@ The administrator area requires a Firebase Authentication account. Login credent
 
 ### Customer feedback
 
-- Four 1â€“5 ratings: product availability, staff service, wait time, and overall experience.
+- Four 1-5 ratings: product availability, staff service, wait time, and overall experience.
 - Optional keyword plus a written comment.
 - Explicit consent choice for displaying the comment publicly.
 - Required-field validation and a confirmation screen after submission.
