@@ -138,23 +138,21 @@ const WaitTimeShirtChart = () => {
           })}
         </div>
 
-        {/* The rack line is positioned against the shirt zone, not the slide. */}
+        {/* Shared coordinate system for the rack and all shirt stacks. */}
         <div
           style={{
             position: "relative",
-            flex: 1,
-            minHeight: 0,
+            flex: "0 0 clamp(190px, 34vh, 300px)",
+            height: "clamp(190px, 34vh, 300px)",
             width: "100%",
-            display: "flex",
-            alignItems: "flex-end",
-            justifyContent: "space-evenly",
-            gap: "clamp(0.15rem, 1vw, 1rem)",
+            maxWidth: "1600px",
+            boxSizing: "border-box",
           }}
         >
           <div
             style={{
               position: "absolute",
-              top: "20%",
+              top: "8%",
               left: 0,
               width: "100%",
               height: "clamp(3px, 0.5vw, 8px)",
@@ -162,51 +160,66 @@ const WaitTimeShirtChart = () => {
               zIndex: 1,
             }}
           />
-          {data.map((entry, index) => {
-            const shirt = SHIRTS[index % SHIRTS.length];
-            const rating = typeof entry.rating === "number" ? entry.rating : 0;
-            const rounded = Math.max(1, Math.round(rating));
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              display: "flex",
+              alignItems: "flex-end",
+              justifyContent: "space-evenly",
+              gap: "clamp(0.15rem, 1vw, 1rem)",
+              zIndex: 2,
+            }}
+          >
+            {data.map((entry, index) => {
+              const shirt = SHIRTS[index % SHIRTS.length];
+              const rating = typeof entry.rating === "number" ? entry.rating : 0;
+              const rounded = Math.max(1, Math.round(rating));
 
-            return (
-              <div
-                key={index}
-                style={{
-                  position: "relative",
-                  zIndex: 2,
-                  width: "clamp(42px, 12vw, 130px)",
-                  height: "clamp(120px, 32vh, 300px)",
-                  maxHeight: "78%",
-                }}
-              >
-                {Array.from({ length: rounded }).map((_, i) => (
-                  <img
-                    key={i}
-                    src={shirt}
-                    alt={`shirt-${i}`}
-                    style={{
-                      position: "absolute",
-                      left: `${(rounded - 1 - i) * 12}%`,
-                      bottom: 0,
-                      height: "100%",
-                      width: "100%",
-                      objectFit: "contain",
-                      zIndex: i,
-                      animation: `slideBounceLeft 0.8s cubic-bezier(0.25, 1.25, 0.5, 1) ${
-                        i * 0.2
-                      }s forwards, sway 3s ease-in-out ${
-                        0.8 + i * 0.2
-                      }s infinite`,
-                    }}
-                  />
-                ))}
-              </div>
-            );
-          })}
+              return (
+                <div
+                  key={index}
+                  style={{
+                    position: "relative",
+                    width: "clamp(42px, 12vw, 130px)",
+                    height: "100%",
+                    minWidth: 0,
+                  }}
+                >
+                  {Array.from({ length: rounded }).map((_, i) => (
+                    <img
+                      key={i}
+                      src={shirt}
+                      alt={`shirt-${i}`}
+                      style={{
+                        position: "absolute",
+                        left: `${(rounded - 1 - i) * 12}%`,
+                        bottom: 0,
+                        height: "100%",
+                        width: "100%",
+                        objectFit: "contain",
+                        zIndex: i + 1,
+                        animation: `slideBounceLeft 0.8s cubic-bezier(0.25, 1.25, 0.5, 1) ${
+                          i * 0.2
+                        }s forwards, sway 3s ease-in-out ${
+                          0.8 + i * 0.2
+                        }s infinite`,
+                      }}
+                    />
+                  ))}
+                </div>
+              );
+            })}
+          </div>
         </div>
 
         <div
           style={{
             width: "100%",
+            flexShrink: 0,
+            minHeight: "clamp(1.5rem, 4vh, 2.5rem)",
+            paddingBottom: "clamp(0.5rem, 1.5vh, 1rem)",
+            boxSizing: "border-box",
             display: "flex",
             justifyContent: "space-evenly",
             gap: "clamp(0.15rem, 1vw, 1rem)",
@@ -222,7 +235,7 @@ const WaitTimeShirtChart = () => {
                 fontWeight: "bold",
               }}
             >
-              {entry.rating.toFixed(1)}/5
+              {Number(entry.rating || 0).toFixed(1)}/5
             </div>
           ))}
         </div>
