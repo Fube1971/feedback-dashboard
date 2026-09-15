@@ -51,11 +51,43 @@ export const Title = styled.h2`
   margin-bottom: 2rem;
 `;
 
-// Text for “Forgot your password?”
-export const Title2 = styled.h2`
+// Secondary action for password recovery
+export const ResetPasswordButton = styled.button`
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-height: 44px;
+  padding: 0;
+  background: transparent;
+  border: none;
   text-align: left;
   color: #8f96a0ff;
-  margin-bottom: 2rem;
+  cursor: pointer;
+  font: inherit;
+  line-height: 1.4;
+  text-decoration: underline;
+
+  &:hover,
+  &:focus-visible {
+    color: #000;
+  }
+
+  &:focus-visible {
+    outline: 2px solid #000;
+    outline-offset: 3px;
+  }
+
+  &:disabled {
+    cursor: wait;
+    opacity: 0.6;
+  }
+`;
+
+export const ResetMessage = styled.p`
+  margin: 0.75rem 0 0;
+  color: #4b5563;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
 `;
 
 // Labels for input fields like “Email”

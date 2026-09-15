@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 // Main layout wrapper for the form page
 export const Container = styled.div`
+  position: relative;
   min-height: 100dvh;
   background-color: white;
 `;
@@ -15,10 +16,15 @@ export const FormWrapper = styled.div`
   margin: 0 auto;
   padding: clamp(1.5rem, 6vw, 3rem) clamp(1rem, 5vw, 2rem);
   box-sizing: border-box;
+
+  @media (max-width: 640px) {
+    padding-top: 5rem;
+  }
 `;
 
 // Wrapper used for the confirmation screen (centered)
 export const CenteredContainer = styled.div`
+  position: relative;
   min-height: 100dvh;
   background-color: white;
   display: flex;
@@ -33,6 +39,10 @@ export const ConfirmationWrapper = styled.div`
   width: 100%;
   padding: clamp(4rem, 12vw, 3rem) clamp(1rem, 5vw, 2rem);
   text-align: center;
+
+  @media (max-width: 640px) {
+    padding-top: 5rem;
+  }
 `;
 
 // Header section of the form (logo + slogan)

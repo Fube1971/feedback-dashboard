@@ -7,7 +7,10 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import {
+  sendPasswordResetEmail,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import { ArrowLeft } from "lucide-react";
 import { auth } from "../../services/firebase";
 
@@ -22,7 +25,8 @@ import {
   Input,
   Button,
   ErrorMessage,
-  Title2,
+  ResetPasswordButton,
+  ResetMessage,
   Title3,
   BackButton,
 } from "./AdminLogin.styles";
@@ -32,6 +36,8 @@ const AdminLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [resetMessage, setResetMessage] = useState("");
+  const [resetting, setResetting] = useState(false);
   const navigate = useNavigate();
 
   // Focus email input on page load
@@ -51,6 +57,47 @@ const AdminLogin = () => {
     } catch (err) {
       setError("Credenciales inválidas o usuario no encontrado.");
       console.error(err.message);
+    }
+  };
+
+  const handlePasswordReset = async () => {
+    const trimmedEmail = email.trim();
+    setResetMessage("");
+
+    if (!trimmedEmail) {
+      setResetMessage(
+        "Ingresa tu correo electrónico para recuperar la contraseña."
+      );
+      emailInput.current?.focus();
+      return;
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
+      setResetMessage("Ingresa un correo electrónico válido.");
+      emailInput.current?.focus();
+      return;
+    }
+
+    setResetting(true);
+
+    try {
+      await sendPasswordResetEmail(auth, trimmedEmail);
+      setResetMessage(
+        "Si existe una cuenta asociada a este correo, recibirás un enlace para restablecer tu contraseña."
+      );
+    } catch (err) {
+      if (err.code === "auth/user-not-found") {
+        setResetMessage(
+          "Si existe una cuenta asociada a este correo, recibirás un enlace para restablecer tu contraseña."
+        );
+      } else {
+        setResetMessage(
+          "No se pudo enviar el enlace. Inténtalo de nuevo más tarde."
+        );
+        console.error(err.message);
+      }
+    } finally {
+      setResetting(false);
     }
   };
 
@@ -94,8 +141,15 @@ const AdminLogin = () => {
             />
           </Label>
 
-          {/* Optional forgot password message */}
-          <Title2>¿Olvidaste la contraseña?</Title2>
+          <ResetPasswordButton
+            type="button"
+            onClick={handlePasswordReset}
+            disabled={resetting}
+          >
+            {resetting ? "Enviando..." : "¿Olvidaste la contraseña?"}
+          </ResetPasswordButton>
+
+          {resetMessage && <ResetMessage aria-live="polite">{resetMessage}</ResetMessage>}
 
           <Button type="submit">
             <span>INICIAR SESIÓN</span>
