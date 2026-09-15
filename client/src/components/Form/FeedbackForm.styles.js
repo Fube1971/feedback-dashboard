@@ -9,10 +9,12 @@ export const Container = styled.div`
 
 // Wrapper for the form content
 export const FormWrapper = styled.div`
-  max-width: 32rem;
+  width: min(100%, 32rem);
+  max-width: 100%;
+  min-width: 0;
   margin: 0 auto;
   padding: clamp(1.5rem, 6vw, 3rem) clamp(1rem, 5vw, 2rem);
-  width: 100%;
+  box-sizing: border-box;
 `;
 
 // Wrapper used for the confirmation screen (centered)
@@ -85,12 +87,16 @@ export const QuestionTitle = styled.h2`
 
 // Wrapper for heart rating component
 export const RatingContainer = styled.div`
+  width: 100%;
+  min-width: 0;
   margin-bottom: 2.5rem;
 `;
 
 // Label section above rating buttons ("Min" / "Max")
 export const RatingLabels = styled.div`
   display: flex;
+  width: 100%;
+  min-width: 0;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
@@ -107,6 +113,8 @@ export const RatingLabel = styled.span`
 // Button group for rating hearts
 export const RatingButtons = styled.div`
   display: flex;
+  width: 100%;
+  min-width: 0;
   justify-content: space-between;
   align-items: center;
   padding: 0 0.5rem;
@@ -121,6 +129,9 @@ export const HeartButton = styled.button`
   min-width: 44px;
   min-height: 44px;
   padding: 0.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 
   &:hover {
     transform: scale(1.1);
@@ -131,13 +142,25 @@ export const HeartButton = styled.button`
   }
 
   svg {
+    width: 44px;
+    height: 44px;
     transition: all 0.2s ease;
+  }
+
+  @media (max-width: 360px) {
+    svg {
+      width: 36px;
+      height: 36px;
+    }
   }
 `;
 
 // Single-line text input (for "keywords")
 export const TextInput = styled.input`
+  display: block;
   width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
   height: 3rem;
   border: 2px solid #000000ff;
   padding: 0.75rem 1rem;
@@ -152,7 +175,10 @@ export const TextInput = styled.input`
 
 // Multi-line textarea input (for "comments")
 export const TextArea = styled.textarea`
+  display: block;
   width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
   height: 6rem;
   border: 2px solid #000000ff;
   padding: 0.75rem 1rem;
@@ -272,6 +298,9 @@ export const BackButton = styled(Link)`
   font-weight: 700;
   font-size: 0.875rem;
   min-height: 44px;
+  max-width: calc(100% - 2rem);
+  overflow-wrap: anywhere;
+  white-space: normal;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   transition: all 0.2s ease;

@@ -6,6 +6,9 @@ export const LoginWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
   min-height: 100vh;
   min-height: 100dvh;
   padding: max(1rem, env(safe-area-inset-top)) 1rem max(1rem, env(safe-area-inset-bottom));
@@ -16,7 +19,7 @@ export const LoginWrapper = styled.div`
 
 // Logo container at the top
 export const Header = styled.header`
-  margin-bottom: 2rem;
+  margin-bottom: clamp(1rem, 4vw, 2rem);
 `;
 
 // Logo image, maximum size 60px
@@ -27,9 +30,11 @@ export const Logo = styled.img`
 
 // White box for the form with border and internal padding
 export const LoginContainer = styled.div`
-  width: 100%;
+  width: min(100%, 400px);
   max-width: 400px;
-  padding: 2rem;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: clamp(1rem, 5vw, 2rem);
   background-color: white;
   border: 1px solid #d1d5db;
   border-radius: 8px;
@@ -63,6 +68,9 @@ export const Title3 = styled.h2`
 
 // Container for field label
 export const Label = styled.label`
+  display: block;
+  width: 100%;
+  max-width: 100%;
   font-family: "adineue PRO Bold", sans-serif;
   text-transform: uppercase;
   margin-bottom: 2rem;
@@ -70,7 +78,10 @@ export const Label = styled.label`
 
 // Styled input fields (email and password)
 export const Input = styled.input`
+  display: block;
   width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
   padding: 0.5rem;
   margin-top: 0.1rem;
   margin-bottom: 0.5rem;
@@ -80,7 +91,10 @@ export const Input = styled.input`
 
 // Button of submission when logging in
 export const Button = styled.button`
+  display: block;
   width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
   padding: 0.75rem 1rem;
   background-color: #000;
   color: #fff;
@@ -88,9 +102,6 @@ export const Button = styled.button`
   border-radius: 4px;
   font-family: "adineue PRO Bold", sans-serif;
   text-align: left;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   cursor: pointer;
   transition: opacity 0.2s ease;
   margin-top: 1.5rem;
@@ -100,6 +111,7 @@ export const Button = styled.button`
   }
 
   .arrow {
+    float: right;
     font-size: 1.25rem;
     transition: transform 0.2s ease;
   }
@@ -127,7 +139,11 @@ export const BackButton = styled(Link)`
   margin-bottom: 1rem;
   text-decoration: none;
   gap: 0.5rem;
-  width: 100%; /* Ocupa todo el ancho disponible */
+  width: min(100%, 400px);
+  max-width: calc(100% - 2rem);
+  min-width: 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
   margin-left: 0;
   align-self: stretch;
 
